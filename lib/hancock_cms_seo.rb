@@ -13,25 +13,7 @@ require 'hancock/seo/engine'
 
 
 module Hancock::Seo
-  # Hancock::register_plugin(self)
-
-  class << self
-    def orm
-      Hancock.orm
-    end
-    def mongoid?
-      Hancock::Seo.orm == :mongoid
-    end
-    def active_record?
-      Hancock::Seo.orm == :active_record
-    end
-    def model_namespace
-      "Hancock::Seo::Models::#{Hancock::Seo.orm.to_s.camelize}"
-    end
-    def orm_specific(name)
-      "#{model_namespace}::#{name}".constantize
-    end
-  end
+  include Hancock::Plugin
 
   autoload :Admin,  'hancock/seo/admin'
   module Admin
