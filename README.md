@@ -1,8 +1,9 @@
 # HancockCmsSeo
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hancock_cms_seo`. To experiment with that code, run `bin/console` for an interactive prompt.
+### Remaded from [EnjoyCMSSeo](https://github.com/enjoycreative/enjoy_cms_seo)
 
-TODO: Delete this and the text above, and describe your gem
+SEO and sitemap fields for [HancockCMS](https://github.com/red-rocks/hancock_cms).
+Add Seo support to HancockCMS plugins by default and other objects in two lines.
 
 ## Installation
 
@@ -22,7 +23,52 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Mongoid
+
+Add this in your model for attributes
+```ruby
+include Hancock::Seo::Seoable
+include Hancock::Seo::SitemapDataField
+```
+
+and this for rails_admin config
+```ruby
+group :seo do
+  active false
+  field :seo
+end
+group :sitemap_data do
+  active false
+  field :sitemap_data
+end
+```
+
+Also you can generate and then edit config/initializers/hancock_seo.rb
+
+    $ rails g hancock:seo:config
+
+SEO fields (h1, title, keywords, description, og_title, og_image, robots) and sitemap_data fields(sitemap_show, sitemap_lastmod, sitemap_changefreq, sitemap_priority) are delegated to your model.
+
+#### Sitemap
+
+Also you can use [SitemapGenerator](https://github.com/kjvarga/sitemap_generator) for sitemap.
+
+#### Google Analitics and Yandex Metrika
+
+We have helper methods for this. Usage
+```ruby
+hancock_ym_counter_tag('counter_id')
+```
+or
+```ruby
+hancock_ga_counter_tag('counter_id')
+```
+or
+```ruby
+render_hancock_counters(ym_counter_id: 'counter_id1', ga_counter_id: 'counter_id2')
+```
+[More](https://github.com/red-rocks/hancock_cms_seo/blob/master/app/helpers/hancock/seo/seo_helper.rb)
+
 
 ## Development
 
