@@ -32,6 +32,14 @@ module Hancock::Seo
         before_save do
           set_default_seo
         end
+
+
+        def self.admin_can_default_actions
+          [:show, :read, :edit, :update]
+        end
+        def self.manager_can_default_actions
+          [:show, :read, :edit, :update]
+        end
       end
 
       def set_default_seo
@@ -51,14 +59,6 @@ module Hancock::Seo
 
       def og_image_jcrop_options
         {}
-      end
-
-
-      def self.admin_default_actions
-        [:edit]
-      end
-      def self.manager_default_actions
-        [:edit]
       end
 
     end

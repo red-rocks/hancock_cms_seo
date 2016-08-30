@@ -24,11 +24,11 @@ module Hancock::Seo
           }
         end
 
-        def self.admin_default_actions
-          [:edit]
+        def self.admin_can_default_actions
+          [:show, :read, :edit, :update]
         end
-        def self.manager_default_actions
-          [:edit]
+        def self.manager_can_default_actions
+          [:show, :read, :edit, :update]
         end
       end
     end
