@@ -30,6 +30,12 @@ module Hancock::Seo
         def self.manager_can_default_actions
           [:show, :read, :edit, :update]
         end
+        def self.admin_cannot_actions
+          [:new, :create]
+        end
+        def self.manager_cannot_actions
+          [:new, :create]
+        end
       end
     end
   end
