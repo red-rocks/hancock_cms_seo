@@ -35,17 +35,35 @@ module Hancock::Seo
 
 
         def self.admin_can_default_actions
-          [:show, :read, :edit, :update]
+          [:show, :read, :edit, :update].freeze
         end
         def self.manager_can_default_actions
-          [:show, :read, :edit, :update]
+          [:show, :read, :edit, :update].freeze
         end
         def self.admin_cannot_actions
-          [:new, :create]
+          [:new, :create].freeze
         end
         def self.manager_cannot_actions
-          [:new, :create]
+          [:new, :create].freeze
         end
+
+        def self.manager_can_add_actions
+          ret = [:nested_set]
+          # ret += [:multiple_file_upload, :sort_embedded] if Hancock::Seo.mongoid?
+          ret << :model_settings if Hancock::Seo.config.model_settings_support
+          ret << :model_accesses if Hancock::Seo.config.user_abilities_support
+          ret += [:comments, :model_comments] if Hancock::Seo.config.ra_comments_support
+          ret.freeze
+        end
+        def self.rails_admin_add_visible_actions
+          ret = [:nested_set]
+          # ret += [:multiple_file_upload, :sort_embedded] if Hancock::Seo.mongoid?
+          ret << :model_settings if Hancock::Seo.config.model_settings_support
+          ret << :model_accesses if Hancock::Seo.config.user_abilities_support
+          ret += [:comments, :model_comments] if Hancock::Seo.config.ra_comments_support
+          ret.freeze
+        end
+
       end
 
       def set_default_seo

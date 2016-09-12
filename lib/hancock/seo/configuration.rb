@@ -10,10 +10,18 @@ module Hancock::Seo
 
     attr_accessor :gallery_support
 
+    attr_accessor :model_settings_support
+    attr_accessor :user_abilities_support
+    attr_accessor :ra_comments_support
+
     def initialize
       @localize = Hancock.config.localize
 
       @gallery_support = defined?(Hancock::Gallery)
+
+      @model_settings_support = defined?(RailsAdminModelSettings)
+      @user_abilities_support = defined?(RailsAdminUserAbilities)
+      @ra_comments_support = defined?(RailsAdminComments)
     end
   end
 end
