@@ -31,6 +31,7 @@ module Hancock::Seo
 
         before_save do
           set_default_seo
+          self.seoable and self.seoable.touch
         end
 
 
