@@ -9,22 +9,22 @@ module Hancock::Seo::SeoHelper
   def render_hancock_counters(opts = {})
     ret = []
 
-    _cache_key = "ym_counter"
+    _cache_key = "ym_counter".freeze
     ym_counter = Rails.cache.fetch(_cache_key) do
-      ym_counter_id = opts[:ym_counter_id] || Settings.ym_counter_id(default: '', kind: :string, label: 'Yandex Метрика ID', cache_keys: _cache_key).strip
+      ym_counter_id = opts[:ym_counter_id] || Settings.ym_counter_id(default: '', kind: :string, label: 'Yandex Метрика ID'.freeze, cache_keys: _cache_key).strip
       if ym_counter_id.blank?
-        Settings.ym_counter_html(default: '', kind: :code, label: 'Yandex Метрика HTML-код', cache_keys: _cache_key).strip
+        Settings.ym_counter_html(default: '', kind: :code, label: 'Yandex Метрика HTML-код'.freeze, cache_keys: _cache_key).strip
       else
         hancock_ym_counter_tag(ym_counter_id)
       end
     end
     ret << ym_counter unless ym_counter.blank?
 
-    _cache_key = "ga_counter"
+    _cache_key = "ga_counter".freeze
     ga_counter = Rails.cache.fetch(_cache_key) do
-      ga_counter_id = opts[:ga_counter_id] || Settings.ga_counter_id(default: '', kind: :string, label: 'Google Analitics ID', cache_keys: _cache_key).strip
+      ga_counter_id = opts[:ga_counter_id] || Settings.ga_counter_id(default: '', kind: :string, label: 'Google Analitics ID'.freeze, cache_keys: _cache_key).strip
       if ga_counter_id.blank?
-        Settings.ga_counter_html(default: '', kind: :code, label: 'Google Analitics HTML-код', cache_keys: _cache_key).strip
+        Settings.ga_counter_html(default: '', kind: :code, label: 'Google Analitics HTML-код'.freeze, cache_keys: _cache_key).strip
       else
         hancock_ga_counter_tag(ga_counter_id)
       end

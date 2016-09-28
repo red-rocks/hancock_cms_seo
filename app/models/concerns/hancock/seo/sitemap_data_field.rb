@@ -29,8 +29,8 @@ module Hancock::Seo::SitemapDataField
 
       sitemap.add sitemap.url_for(i),
           :lastmod      => _lastmod,
-          :changefreq   => "#{_sitemap_data.sitemap_changefreq.blank? ? self.default_changefreq       : _sitemap_data.sitemap_changefreq}",
-          :priority     => (_sitemap_data.sitemap_priority.nil?       ? self.default_sitemap_priority : _sitemap_data.sitemap_priority)
+          :changefreq   => "#{_sitemap_data.sitemap_changefreq.blank? ? self.default_sitemap_changefreq   : _sitemap_data.sitemap_changefreq}",
+          :priority     => (_sitemap_data.sitemap_priority.nil?       ? self.default_sitemap_priority     : _sitemap_data.sitemap_priority)
     end
 
   end

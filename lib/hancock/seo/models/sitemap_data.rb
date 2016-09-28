@@ -7,7 +7,7 @@ module Hancock::Seo
 
       include Hancock::Seo.orm_specific('SitemapData')
 
-      SITEMAP_CHANGEFREQ_ARRAY = %w(always hourly daily weekly monthly yearly never)
+      SITEMAP_CHANGEFREQ_ARRAY = %w(always hourly daily weekly monthly yearly never).freeze
 
       included do
         belongs_to :sitemap_data_field, polymorphic: true

@@ -33,6 +33,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sitemap_generator"
   spec.add_dependency "rails_admin_sitemap"
 
-  spec.add_dependency 'hancock_cms', [">=0.1.0", "<=1.0.0"]
-  # spec.add_dependency 'hancock_cms', ["~> 0.1.0", "~> 1.0.0"]
+  spec.add_dependency 'hancock_cms', [">=1.0", "<=2.0"]
+  # spec.add_dependency 'hancock_cms', ["~> 1.0", "~> 2.0"]
 end
