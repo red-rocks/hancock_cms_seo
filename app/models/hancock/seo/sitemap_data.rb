@@ -9,7 +9,7 @@ module Hancock::Seo
 
     include Hancock::Seo::Decorators::SitemapData
 
-    rails_admin(&Hancock::Seo::Admin::SitemapData.config(false, rails_admin_add_fields) { |config|
+    rails_admin(&Hancock::Seo::Admin::SitemapData.config(rails_admin_add_fields) { |config|
       rails_admin_add_config(config)
     })
   end

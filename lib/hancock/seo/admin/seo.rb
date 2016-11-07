@@ -1,9 +1,10 @@
 module Hancock::Seo
   module Admin
     module Seo
-      def self.config(is_active = true, fields = {})
+      def self.config(fields = {})
         Proc.new {
           navigation_label 'SEO'
+          label I18n.t('hancock.seo.seo')
           field :seoable do
             read_only true
           end

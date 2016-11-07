@@ -1,7 +1,7 @@
 module Hancock::Seo
   module Admin
     module SitemapData
-      def self.config(is_active = false, fields = {})
+      def self.config(fields = {})
         Proc.new {
           navigation_label 'SEO'
           label I18n.t('hancock.seo.sitemap_data')

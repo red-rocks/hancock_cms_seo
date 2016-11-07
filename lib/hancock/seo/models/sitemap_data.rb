@@ -10,7 +10,12 @@ module Hancock::Seo
       SITEMAP_CHANGEFREQ_ARRAY = %w(always hourly daily weekly monthly yearly never).freeze
 
       included do
-        belongs_to :sitemap_data_field, polymorphic: true
+
+        if Hancock.rails4?
+          belongs_to :sitemap_data_field, polymorphic: true
+        else
+          belongs_to :sitemap_data_field, polymorphic: true, optional: true
+        end
 
         def self.goto_hancock
           self.where(sitemap_data_field_type: /^Enjoy/).all.map { |s|

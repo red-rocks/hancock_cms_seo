@@ -11,7 +11,12 @@ module Hancock::Seo
       include Hancock::Seo.orm_specific('Seo')
 
       included do
-        belongs_to :seoable, polymorphic: true
+
+        if Hancock.rails4?
+          belongs_to :seoable, polymorphic: true
+        else
+          belongs_to :seoable, polymorphic: true, optional: true
+        end
 
         def self.goto_hancock
           self.where(seoable_type: /^Enjoy/).all.map { |s|

@@ -15,6 +15,7 @@ module Hancock::Seo
           scope :for_sitemap,     -> { sitemap_show }
           scope :show_in_sitemap, -> { sitemap_show }
         end
+        
       end
     end
   end

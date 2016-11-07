@@ -12,7 +12,7 @@
 
 - if @seo_page and @seo_page.title
   - content_for :title do
-    title= @seo_page.title
+    = @seo_page.title
 - elsif @seo_parent_page and @seo_parent_page.title
   - content_for :title do
-    title= @seo_parent_page.title
+    = @seo_parent_page.title

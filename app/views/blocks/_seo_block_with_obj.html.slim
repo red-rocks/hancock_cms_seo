@@ -9,7 +9,7 @@
     = render 'shared/og', title: obj.get_og_title, image: obj.og_image
   - if obj.title
     - content_for :title do
-      title= obj.title
+      = obj.title
 
 - elsif @seo_page
   - content_for :meta do
@@ -18,10 +18,10 @@
 
 - if obj and obj.title
   - content_for :title do
-    title= obj.title
+    = obj.title
 - elsif @seo_page and @seo_page.title
   - content_for :title do
-    title= @seo_page.title
+    = @seo_page.title
 - elsif @seo_parent_page and @seo_parent_page.title
   - content_for :title do
-    title= @seo_parent_page.title
+    = @seo_parent_page.title

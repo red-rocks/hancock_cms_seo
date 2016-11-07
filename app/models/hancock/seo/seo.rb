@@ -9,7 +9,7 @@ module Hancock::Seo
 
     include Hancock::Seo::Decorators::Seo
 
-    rails_admin(&Hancock::Seo::Admin::Seo.config(false, rails_admin_add_fields) { |config|
+    rails_admin(&Hancock::Seo::Admin::Seo.config(rails_admin_add_fields) { |config|
       rails_admin_add_config(config)
     })
   end
