@@ -38,19 +38,19 @@ module Hancock::Seo::Decorators
       #   #super(config)
       # end
       #
-      # def admin_can_user_defined_actions
+      # def self.admin_can_user_defined_actions
       #   [].freeze
       # end
-      # def admin_cannot_user_defined_actions
+      # def self.admin_cannot_user_defined_actions
       #   [].freeze
       # end
-      # def manager_can_user_defined_actions
+      # def self.manager_can_user_defined_actions
       #   [].freeze
       # end
-      # def manager_cannot_user_defined_actions
+      # def self.manager_cannot_user_defined_actions
       #   [].freeze
       # end
-      # def rails_admin_user_defined_visible_actions
+      # def self.rails_admin_user_defined_visible_actions
       #   [].freeze
       # end
 
