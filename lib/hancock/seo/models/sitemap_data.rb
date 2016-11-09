@@ -43,7 +43,7 @@ module Hancock::Seo
         end
 
         def self.manager_can_add_actions
-          ret = [:nested_set]
+          ret = []
           # ret += [:multiple_file_upload, :sort_embedded] if Hancock::Seo.mongoid?
           ret << :model_settings if Hancock::Seo.config.model_settings_support
           ret << :model_accesses if Hancock::Seo.config.user_abilities_support
@@ -51,7 +51,7 @@ module Hancock::Seo
           ret.freeze
         end
         def self.rails_admin_add_visible_actions
-          ret = [:nested_set]
+          ret = []
           # ret += [:multiple_file_upload, :sort_embedded] if Hancock::Seo.mongoid?
           ret << :model_settings if Hancock::Seo.config.model_settings_support
           ret << :model_accesses if Hancock::Seo.config.user_abilities_support
