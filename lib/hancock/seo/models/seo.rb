@@ -31,7 +31,8 @@ module Hancock::Seo
         end
 
         if Hancock::Seo.config.gallery_support
-          hancock_cms_attached_file :og_image
+          set_default_auto_crop_params_for(:og_image)
+          hancock_cms_attached_file(:og_image)
         end
 
         before_save do
@@ -84,7 +85,7 @@ module Hancock::Seo
       end
 
       def og_image_styles
-        {thumb: "800x600>"}
+        {thumb: "160x120>", standard: "800x600>"}
       end
 
       def og_image_jcrop_options
