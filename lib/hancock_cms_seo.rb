@@ -6,7 +6,8 @@
 
 require "hancock/seo/version"
 
-# require 'hancock_cms'
+require 'sitemap_generator'
+require 'rails_admin_sitemap'
 
 require 'hancock/seo/configuration'
 require 'hancock/seo/engine'

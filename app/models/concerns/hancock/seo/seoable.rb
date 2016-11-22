@@ -1,6 +1,6 @@
 module Hancock::Seo::Seoable
   extend ActiveSupport::Concern
-  LOCALIZED_FIELDS = [:h1, :title, :keywords, :description, :og_title]
+  LOCALIZED_FIELDS = [:h1, :title, :keywords, :description, :og_title, :author]
   FIELDS = LOCALIZED_FIELDS + [:og_image, :robots]
 
   included do

@@ -9,6 +9,7 @@ module Hancock::Seo
           field :h1, type: String, localize: Hancock::Seo.config.localize
 
           field :title, type: String, localize: Hancock::Seo.config.localize
+          field :author, type: String, localize: Hancock::Seo.config.localize
           field :keywords, type: String, localize: Hancock::Seo.config.localize
           field :description, type: String, localize: Hancock::Seo.config.localize
           field :robots, type: String, localize: Hancock::Seo.config.localize

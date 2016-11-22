@@ -14,6 +14,9 @@ module Hancock::Seo
           field :title, :string do
             searchable true
           end
+          field :author, :string do
+            searchable true
+          end
           field :keywords, :text do
             searchable true
           end
