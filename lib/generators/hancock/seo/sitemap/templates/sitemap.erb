@@ -1,0 +1,31 @@
+require 'rubygems'
+require 'sitemap_generator'
+
+# saved_default_url_options_host      = default_url_options[:host]
+saved_default_url_options_only_path = default_url_options[:only_path]
+default_url_options[:only_path] = true
+# default_url_options[:host] = ""
+SitemapGenerator::Sitemap.default_host = '<%= host %>'
+SitemapGenerator::Sitemap.create do
+
+  Hancock::Seo::SitemapData.enabled.for_sitemap.all.to_a.each do |sd|
+    obj = sd.sitemap_data_field
+    next if(!obj or (obj.is_a?(Hancock::Pages::Page) and obj.fullpath == "/"))
+
+    begin
+      _lastmod = sd.sitemap_lastmod.to_date  unless sd.sitemap_lastmod.nil?
+      _lastmod = sd.updated_at.to_date       unless sd.updated_at.nil?        if _lastmod.nil?
+      _lastmod = sd.created_at.to_date       unless sd.created_at.nil?        if _lastmod.nil?
+      _url = obj.is_a?(Hancock::Pages::Page) ? obj.fullpath : url_for(obj)
+
+      add _url,
+          :lastmod      => _lastmod,
+          :changefreq   => "#{sd.sitemap_changefreq.blank? ? 'daily' : sd.sitemap_changefreq}",
+          :priority     => (sd.sitemap_priority.nil?       ? 0.9     : sd.sitemap_priority)
+    rescue
+    end
+  end
+
+end
+# default_url_options[:host]      = saved_default_url_options_host
+default_url_options[:only_path] = saved_default_url_options_only_path
