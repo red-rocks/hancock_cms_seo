@@ -7,14 +7,12 @@
     - og_title = (obj.get_og_title.blank? and seo_page ? seo_page.get_og_title  : obj.get_og_title)
     - og_image = (obj.og_image.blank?     and seo_page ? seo_page.og_image      : obj.og_image)
     = render 'shared/og', title: obj.get_og_title, image: obj.og_image
-  - if obj.title
-    - content_for :title do
-      = obj.title
 
 - elsif @seo_page
   - content_for :meta do
     = render 'shared/meta', obj: @seo_page
     = render 'shared/og', title: @seo_page.get_og_title, image: @seo_page.og_image
+    
 
 - if obj and obj.title
   - content_for :title do
