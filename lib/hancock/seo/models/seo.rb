@@ -13,9 +13,9 @@ module Hancock::Seo
       included do
 
         if Hancock.rails4?
-          belongs_to :seoable, polymorphic: true
+          belongs_to :seoable, polymorphic: true, touch: true
         else
-          belongs_to :seoable, polymorphic: true, optional: true
+          belongs_to :seoable, polymorphic: true, optional: true, touch: true
         end
 
         def self.goto_hancock

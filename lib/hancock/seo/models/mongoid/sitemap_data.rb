@@ -5,6 +5,8 @@ module Hancock::Seo
         extend ActiveSupport::Concern
 
         included do
+          index({sitemap_data_field_id: 1, sitemap_data_field_type: 1})
+          index({enabled: 1, sitemap_show: 1})
 
           field :sitemap_show,        type: Boolean, default: true
           field :sitemap_lastmod,     type: DateTime
@@ -15,7 +17,7 @@ module Hancock::Seo
           scope :for_sitemap,     -> { sitemap_show }
           scope :show_in_sitemap, -> { sitemap_show }
         end
-        
+
       end
     end
   end
