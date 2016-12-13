@@ -71,6 +71,16 @@ module Hancock::Seo
           ret.freeze
         end
 
+        def self.clear_empty_objects
+          Hancock::Seo::Seo.where(:id.in => with_empty_objects).delete_all
+        end
+
+        def self.with_empty_objects
+          Hancock::Seo::Seo.all.select { |s|
+            !s.seoable.nil? rescue true
+          }.map(&:id)
+        end
+
       end
 
       def set_default_seo

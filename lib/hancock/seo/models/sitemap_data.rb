@@ -59,6 +59,16 @@ module Hancock::Seo
           ret.freeze
         end
 
+        def self.clear_empty_objects
+          Hancock::Seo::SitemapData.where(:id.in => with_empty_objects).delete_all
+        end
+
+        def self.with_empty_objects
+          Hancock::Seo::SitemapData.all.select { |s|
+            !s.sitemap_data_field.nil? rescue true
+          }.map(&:id)
+        end
+
       end
     end
   end

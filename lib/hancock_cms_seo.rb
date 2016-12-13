@@ -16,6 +16,14 @@ require 'hancock/seo/engine'
 module Hancock::Seo
   include Hancock::Plugin
 
+  class << self
+    def clear_empty_objects
+      [Hancock::Seo::Seo, Hancock::Seo::SitemapData].map { |model|
+        model.clear_empty_objects
+      }
+    end
+  end
+
   autoload :Admin,  'hancock/seo/admin'
   module Admin
     autoload :SitemapData,  'hancock/seo/admin/sitemap_data'
