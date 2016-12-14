@@ -17,11 +17,11 @@ module Hancock::Seo
     def initialize
       @localize = Hancock.config.localize
 
-      @gallery_support = defined?(Hancock::Gallery)
+      @gallery_support = !!defined?(Hancock::Gallery)
 
-      @model_settings_support = defined?(RailsAdminModelSettings)
-      @user_abilities_support = defined?(RailsAdminUserAbilities)
-      @ra_comments_support = defined?(RailsAdminComments)
+      @model_settings_support = !!defined?(RailsAdminModelSettings)
+      @user_abilities_support = !!defined?(RailsAdminUserAbilities)
+      @ra_comments_support = !!defined?(RailsAdminComments)
     end
   end
 end
