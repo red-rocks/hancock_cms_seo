@@ -1,8 +1,8 @@
 - obj ||= nil
 - if obj
-  - cache obj do
+  - seo_page = @seo_page || @seo_parent_page
+  - cache [obj, seo_page] do
     - content_for :meta do
-      - seo_page = @seo_page || @seo_parent_page
       = render 'shared/meta', obj: obj
 
       - og_title = (obj.get_og_title.blank? and seo_page ? seo_page.get_og_title  : obj.get_og_title)
