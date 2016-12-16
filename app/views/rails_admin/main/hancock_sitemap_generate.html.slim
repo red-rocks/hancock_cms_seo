@@ -1,0 +1,9 @@
+- if request.get?
+  - _model = @abstract_model.model
+  - _model_str = _model.name.underscore
+
+  #hancock_cache_global_clear_wrapper
+    
+    #hancock_cache_global_clear.col-md-12
+      .controls
+        div= link_to "Сгенерить карту сайта".freeze, hancock_sitemap_generate_path(model_name: _model.rails_admin_name), data: {method: :post}

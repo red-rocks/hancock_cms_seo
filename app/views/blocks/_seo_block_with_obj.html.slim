@@ -1,16 +1,17 @@
 - obj ||= nil
 - if obj
   - seo_page = @seo_page || @seo_parent_page
-  - cache [obj, seo_page] do
-    - content_for :meta do
+  - content_for :meta do
+    - cache [obj, seo_page, 'meta'] do
       = render 'shared/meta', obj: obj
 
       - og_title = (obj.get_og_title.blank? and seo_page ? seo_page.get_og_title  : obj.get_og_title)
       - og_image = (obj.og_image.blank?     and seo_page ? seo_page.og_image      : obj.og_image)
       = render 'shared/og', title: og_title, image: og_image
-    - if obj.title
-      - content_for :title do
-        = obj.title
+        
+  - unless obj.title.blank?
+    - content_for :title do
+      = obj.title
       
 - else
   = render 'blocks/seo_block'

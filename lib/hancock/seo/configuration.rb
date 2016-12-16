@@ -9,6 +9,7 @@ module Hancock::Seo
     attr_accessor :localize
 
     attr_accessor :gallery_support
+    attr_accessor :cache_support
 
     attr_accessor :model_settings_support
     attr_accessor :user_abilities_support
@@ -18,6 +19,7 @@ module Hancock::Seo
       @localize = Hancock.config.localize
 
       @gallery_support = !!defined?(Hancock::Gallery)
+      @cache_support  = !!defined?(Hancock::Cache)
 
       @model_settings_support = !!defined?(RailsAdminModelSettings)
       @user_abilities_support = !!defined?(RailsAdminUserAbilities)

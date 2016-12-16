@@ -44,6 +44,10 @@ module Hancock::Seo
             field :og_image, :hancock_image
           end
 
+          if Hancock::Pages.config.cache_support
+            group :caching, &Hancock::Cache::Admin.caching_block
+          end
+
           Hancock::RailsAdminGroupPatch::hancock_cms_group(self, fields)
 
           if block_given?
