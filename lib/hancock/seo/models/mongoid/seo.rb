@@ -4,8 +4,8 @@ module Hancock::Seo
       module Seo
         extend ActiveSupport::Concern
         included do
-          index({seoable_id: 1, seoable_type: 1})
-          index({enabled: 1})
+          index({seoable_id: 1, seoable_type: 1}, {background: true})
+          index({enabled: 1},                     {background: true})
 
 
           # field :name, type: String, localize: Hancock::Seo.config.localize
