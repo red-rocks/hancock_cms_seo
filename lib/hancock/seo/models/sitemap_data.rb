@@ -17,6 +17,10 @@ module Hancock::Seo
           belongs_to :sitemap_data_field, polymorphic: true, optional: true, touch: true
         end
 
+        def self.rails_admin_name
+          self.name.gsub("::", "~").underscore
+        end
+
         def self.goto_hancock
           self.where(sitemap_data_field_type: /^Enjoy/).all.map { |s|
             unless s.sitemap_data_field.blank?

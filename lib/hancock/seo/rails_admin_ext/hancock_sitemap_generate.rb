@@ -80,7 +80,8 @@ module RailsAdmin
                 flash[:error]   = error
               end
 
-              redirect_to dashboard_path
+              # redirect_to dashboard_path
+              redirect_to index_path(model_name: @abstract_model)
             end
           end
         end

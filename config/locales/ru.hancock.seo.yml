@@ -28,3 +28,10 @@ ru:
         sitemap_lastmod: lastmod
         sitemap_changefreq: changefreq
         sitemap_priority: priority
+
+  admin:
+    actions:
+      hancock_sitemap_generate:
+        menu:       "Сгенирить карту сайта"
+        breadcrumb: "Сгенирить карту сайта"
+        title:      "Сгенирить карту сайта"
