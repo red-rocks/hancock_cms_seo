@@ -34,7 +34,9 @@ module Hancock::Seo
           field :description, :text do
             searchable true
           end
-          field :robots, :string
+          field :robots, :string do
+            searchable true
+          end
 
           field :og_title, :string do
             searchable true
