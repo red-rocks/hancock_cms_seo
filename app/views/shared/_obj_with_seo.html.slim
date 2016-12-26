@@ -1,5 +1,7 @@
 - unless obj.nil?
-  - cache [obj, @seo_page] do
+
+  - _cache_helper = (Hancock::Seo.config.cache_support ? :hancock_cache : :cache)
+  - send _cache_helper,  [obj, @seo_page].uniq do
     .text_content
       - seo = obj.seo
       - if (!defined?(h1) || h1) && seo and !seo.h1.blank?
@@ -17,12 +19,16 @@
   = render 'shared/admin_link', obj: obj
   - if !@seo_page.nil? && (@seo_page.id != obj.id || @seo_page.class.name != obj.class.name)
     = render 'shared/admin_link', obj: @seo_page
+    
+  = render 'blocks/seo_block_with_obj', obj: obj
 
-  - content_for :meta do
-    - cache [obj, 'meta'] do
-      = render 'shared/meta', obj: obj
-      = render 'shared/og', title: obj.get_og_title, image: obj.og_image
-
-  - content_for :title do
-    - if obj.title
-      = obj.title
+  / - content_for :meta do
+  /   - send _cache_helper,  [obj, 'meta'] do
+  /     = render 'shared/meta', obj: obj, alt_obj: @seo_page
+  /     - og_title = (obj.get_og_title.blank? and @seo_page ? @seo_page.get_og_title  : obj.get_og_title)
+  /     - og_image = (obj.og_image.blank?     and @seo_page ? @seo_page.og_image      : obj.og_image)
+  /     = render 'shared/og', title: _og_title, image: _og_image
+  / 
+  / - content_for :title do
+  /   - if obj.title
+  /     = obj.title

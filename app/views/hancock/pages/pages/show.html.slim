@@ -1,2 +1,2 @@
-- cache @seo_page do
-  = render 'shared/obj_with_seo', obj: @seo_page
+- _partial_path = (Hancock::Pages.config.seo_support ? 'shared/obj_with_seo' : 'shared/obj')
+= render _partial_path, obj: @seo_page

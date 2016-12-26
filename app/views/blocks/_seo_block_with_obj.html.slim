@@ -2,7 +2,8 @@
 - if obj
   - seo_page = @seo_page || @seo_parent_page
   - content_for :meta do
-    - cache [obj, seo_page, 'meta'] do
+    - _cache_helper = (Hancock::Seo.config.cache_support ? :hancock_cache : :cache)
+    - send _cache_helper, [obj, seo_page, 'meta'].uniq.compact do
       = render 'shared/meta', obj: obj
 
       - og_title = (obj.get_og_title.blank? and seo_page ? seo_page.get_og_title  : obj.get_og_title)

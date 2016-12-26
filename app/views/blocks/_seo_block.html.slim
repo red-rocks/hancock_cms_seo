@@ -1,6 +1,7 @@
 - if @seo_page
   - content_for :meta do
-    - cache [@seo_page, @seo_parent_page, 'meta'] do
+    - _cache_helper = (Hancock::Seo.config.cache_support ? :hancock_cache : :cache)
+    - send _cache_helper,  [@seo_page, @seo_parent_page, 'meta'].compact.uniq do
       = render 'shared/meta', obj: @seo_page, alt_obj: @seo_parent_page
 
       - og_title = (@seo_page.get_og_title.blank? and @seo_parent_page ? @seo_parent_page.get_og_title  : @seo_page.get_og_title)
@@ -14,7 +15,8 @@
        
 - elsif @seo_parent_page
   - content_for :meta do
-    - cache [@seo_parent_page, 'meta'] do
+    - _cache_helper = (Hancock::Seo.config.cache_support ? :hancock_cache : :cache)
+    - send _cache_helper,  [@seo_parent_page, 'meta'] do
       = render 'shared/meta', obj: @seo_parent_page
       = render 'shared/og', title: @seo_parent_page.get_og_title, image: @seo_parent_page.og_image
     

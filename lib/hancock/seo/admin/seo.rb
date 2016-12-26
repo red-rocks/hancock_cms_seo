@@ -53,7 +53,7 @@ module Hancock::Seo
             field :og_image, :hancock_image
           end
 
-          if Hancock::Pages.config.cache_support
+          if Hancock::Seo.config.cache_support
             group :caching, &Hancock::Cache::Admin.caching_block
           end
 
