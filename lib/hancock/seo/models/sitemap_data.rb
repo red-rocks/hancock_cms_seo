@@ -33,16 +33,16 @@ module Hancock::Seo
           }
         end
 
-        def self.admin_can_default_actions
-          [:show, :read, :edit, :update].freeze
-        end
-        def self.manager_can_default_actions
-          [:show, :read, :edit, :update].freeze
-        end
-        def self.admin_cannot_actions
+        # def self.admin_can_default_actions
+        #   [:show, :read, :edit, :update].freeze
+        # end
+        # def self.manager_can_default_actions
+        #   [:show, :read, :edit, :update].freeze
+        # end
+        def self.admin_cannot_add_actions
           [:new, :create].freeze
         end
-        def self.manager_cannot_actions
+        def self.manager_cannot_add_actions
           [:new, :create].freeze
         end
 
@@ -50,7 +50,7 @@ module Hancock::Seo
           ret = [:hancock_sitemap_generate]
           # ret += [:multiple_file_upload, :sort_embedded] if Hancock::Seo.mongoid?
           ret << :model_settings if Hancock::Seo.config.model_settings_support
-          ret << :model_accesses if Hancock::Seo.config.user_abilities_support
+          # ret << :model_accesses if Hancock::Seo.config.user_abilities_support
           ret += [:comments, :model_comments] if Hancock::Seo.config.ra_comments_support
           ret.freeze
         end
