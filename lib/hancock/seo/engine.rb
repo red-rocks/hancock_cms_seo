@@ -25,7 +25,6 @@ module Hancock::Seo
     # end
 
     config.after_initialize do
-      puts 'Hancock::Seo after_initialize'
       # Write default email settings to DB so they can be changed.
       begin
         if Settings and Settings.table_exists?
