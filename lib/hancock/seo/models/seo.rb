@@ -39,8 +39,11 @@ module Hancock::Seo
           hancock_cms_attached_file(:og_image)
         end
 
-        before_save do
+        before_create do
           set_default_seo
+        end
+
+        before_save do
           self.seoable and self.seoable.touch
         end
 
