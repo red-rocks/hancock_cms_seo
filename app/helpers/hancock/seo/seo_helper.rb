@@ -26,7 +26,7 @@ module Hancock::Seo::SeoHelper
         _html
       else
         ym_counter_id = opts[:ym_counter_id] || Settings.ym_counter_id(default: '', kind: :string, label: 'Yandex Метрика ID'.freeze, cache_keys: _cache_key).strip
-        hancock_ym_counter_tag(ym_counter_id)
+        hancock_ym_counter_tag(ym_counter_id) unless ym_counter_id.blank?
       end
     end
     ret << ym_counter unless ym_counter.blank?
@@ -48,7 +48,7 @@ module Hancock::Seo::SeoHelper
         _html
       else
         ga_counter_id = opts[:ga_counter_id] || Settings.ga_counter_id(default: '', kind: :string, label: 'Google Analitics ID'.freeze, cache_keys: _cache_key).strip
-        hancock_ga_counter_tag(ga_counter_id)
+        hancock_ga_counter_tag(ga_counter_id) unless ga_counter_id.blank?
       end
     end
     ret << ga_counter unless ga_counter.blank?
