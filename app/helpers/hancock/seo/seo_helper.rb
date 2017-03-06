@@ -1,6 +1,6 @@
 module Hancock::Seo::SeoHelper
 
-  def hancock_ym_counter_tag(counter_id
+  def hancock_ym_counter_tag(counter_id)
     return nil if counter_id.blank?
     render partial: "hancock/seo/blocks/ym", locals: {counter_id: counter_id}
   end
