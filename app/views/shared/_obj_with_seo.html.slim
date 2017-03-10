@@ -12,7 +12,7 @@
         - unless @seo_page.nil?
           == @seo_page.page_content(self) rescue @seo_page.page_content
       - else
-        - if obj.is_a?(Hancock::Pages::Page)
+        - if defined?(Hancock::Pages::Page) and obj.is_a?(Hancock::Pages::Page)
           == obj.page_content(self) rescue obj.page_content
         - else
           - if obj.respond_to?(:page_content)

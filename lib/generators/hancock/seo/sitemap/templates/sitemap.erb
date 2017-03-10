@@ -10,7 +10,7 @@ SitemapGenerator::Sitemap.create do
 
   Hancock::Seo::SitemapData.enabled.for_sitemap.all.to_a.each do |sd|
     obj = sd.sitemap_data_field
-    next if(!obj or (obj.is_a?(Hancock::Pages::Page) and obj.fullpath == "/"))
+    next if(!obj or (defined?(Hancock::Pages::Page) and obj.is_a?(Hancock::Pages::Page) and obj.fullpath == "/"))
 
     begin
       _lastmod = sd.sitemap_lastmod.to_date  unless sd.sitemap_lastmod.nil?
