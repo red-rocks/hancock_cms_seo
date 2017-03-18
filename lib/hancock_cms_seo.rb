@@ -2,8 +2,7 @@ require "hancock/seo/version"
 
 require 'sitemap_generator'
 require 'rails_admin_sitemap'
-
-require 'hancock/seo/rails_admin_ext/hancock_sitemap_generate'
+require 'rails_admin_robots_txt'
 
 require 'hancock/seo/configuration'
 require 'hancock/seo/engine'
