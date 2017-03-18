@@ -15,7 +15,8 @@ module Hancock::Seo::XFrameOptions
 
   protected
   def x_frame_options_referer_regexp
-    /^https?:\/\/([^\/]+metrika.*yandex.(ru|ua|com|com.tr|by|kz)|([^\/]+.)?webvisor.com)\//
+    # /^https?:\/\/([^\/]+metrika.*yandex.(ru|ua|com|com.tr|by|kz)|([^\/]+.)?webvisor.com)\//
+    /^https?\:\/\/([^\/]*metrika.*yandex\.(ru|ua|com|com\.tr|by|kz)|([^\/]+\.)?webvisor\.com)\//i
   end
 
 end
