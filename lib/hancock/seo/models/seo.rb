@@ -79,13 +79,16 @@ module Hancock::Seo
         end
 
         def self.clear_empty_objects
-          Hancock::Seo::Seo.where(:id.in => with_empty_objects).delete_all
+          with_empty_objects.delete_all
         end
 
-        def self.with_empty_objects
+        def self.ids_with_empty_objects
           Hancock::Seo::Seo.all.select { |s|
-            !s.seoable.nil? rescue true
+            !s.seoable.nil? rescue false
           }.map(&:id)
+        end
+        def self.with_empty_objects
+          Hancock::Seo::Seo.where(:id.in => ids_with_empty_objects)
         end
 
       end

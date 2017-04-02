@@ -6,6 +6,14 @@ module Hancock::Seo
         included do
           index({seoable_id: 1, seoable_type: 1}, {background: true})
           index({enabled: 1},                     {background: true})
+          # index({disconnected: 1},                {background: true})
+          #
+          # field :disconnected, typee: Boolean, default: -> {
+          #   !seoable
+          # }
+          # scope :disconnected, -> {
+          #   where(disconnected: true)
+          # }
 
 
           # field :name, type: String, localize: Hancock::Seo.config.localize

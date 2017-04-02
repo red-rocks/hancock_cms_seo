@@ -11,6 +11,11 @@ module Hancock::Seo
         Proc.new {
           navigation_label(!nav_label.blank? ? nav_label : 'SEO')
 
+          list do
+            # scopes [nil, :enabled, :disconnected]
+            scopes [nil, :enabled, :with_empty_objects]
+          end
+
           label I18n.t('hancock.seo.seo')
           field :seoable do
             read_only true
@@ -26,6 +31,7 @@ module Hancock::Seo
               end.to_sentence.html_safe
             end
           end
+          # field :disconnected, :toggle
           field :h1, :string do
             searchable true
           end

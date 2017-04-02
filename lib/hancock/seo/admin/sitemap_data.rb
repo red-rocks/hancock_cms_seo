@@ -10,7 +10,12 @@ module Hancock::Seo
 
         Proc.new {
           navigation_label(!nav_label.blank? ? nav_label : 'SEO')
-          
+
+          list do
+            # scopes [nil, :enabled, :disconnected]
+            scopes [nil, :enabled, :with_empty_objects]
+          end
+
           label I18n.t('hancock.seo.sitemap_data')
           field :sitemap_data_field do
             read_only true
@@ -26,6 +31,7 @@ module Hancock::Seo
               end.to_sentence.html_safe
             end
           end
+          # field :disconnected, :toggle
           field :sitemap_show, :toggle
           field :sitemap_lastmod
           field :sitemap_changefreq, :enum do
