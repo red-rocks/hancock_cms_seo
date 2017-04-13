@@ -29,8 +29,8 @@
   / - content_for :meta do
   /   - send _cache_helper,  [obj, 'meta'] do
   /     = render 'shared/meta', obj: obj, alt_obj: @seo_page
-  /     - og_title = (obj.get_og_title.blank? and @seo_page ? @seo_page.get_og_title  : obj.get_og_title)
-  /     - og_image = (obj.og_image.blank?     and @seo_page ? @seo_page.og_image      : obj.og_image)
+  /     - og_title = ((obj.get_og_title.blank? and @seo_page) ? @seo_page.get_og_title  : obj.get_og_title)
+  /     - og_image = ((obj.og_image.blank?     and @seo_page) ? @seo_page.og_image      : obj.og_image)
   /     = render 'shared/og', title: _og_title, image: _og_image
   / 
   / - content_for :title do

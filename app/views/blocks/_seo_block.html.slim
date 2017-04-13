@@ -4,8 +4,8 @@
     - send _cache_helper,  [@seo_page, @seo_parent_page, 'meta'].compact.uniq do
       = render 'shared/meta', obj: @seo_page, alt_obj: @seo_parent_page
 
-      - og_title = (@seo_page.get_og_title.blank? and @seo_parent_page ? @seo_parent_page.get_og_title  : @seo_page.get_og_title)
-      - og_image = (@seo_page.og_image.blank?     and @seo_parent_page ? @seo_parent_page.og_image      : @seo_page.og_image)
+      - og_title = ((@seo_page.get_og_title.blank? and @seo_parent_page) ? @seo_parent_page.get_og_title  : @seo_page.get_og_title)
+      - og_image = ((@seo_page.og_image.blank?     and @seo_parent_page) ? @seo_parent_page.og_image      : @seo_page.og_image)
       = render 'shared/og', title: og_title, image: og_image
   
   - unless @seo_page.title.blank?
