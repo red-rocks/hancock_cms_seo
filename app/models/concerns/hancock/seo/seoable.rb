@@ -1,7 +1,7 @@
 module Hancock::Seo::Seoable
   extend ActiveSupport::Concern
-  LOCALIZED_FIELDS = [:h1, :title, :keywords, :description, :og_title, :author]
-  FIELDS = LOCALIZED_FIELDS + [:og_image, :robots]
+  LOCALIZED_FIELDS = [:h1, :title, :keywords, :description, :author, :og_title, :og_description, :og_url]
+  FIELDS = LOCALIZED_FIELDS + [:og_image, :robots, :og_type]
 
   included do
     has_one :seo, as: :seoable, autosave: true, class_name: "Hancock::Seo::Seo"
@@ -61,7 +61,13 @@ module Hancock::Seo::Seoable
 
   def get_og_title
     return self.og_title unless self.og_title.blank?
-    self.name if self.respond_to?(:name)
+    self.page_title
+    # self.name if self.respond_to?(:name)
+  end
+
+  def get_og_description
+    return self.og_description unless self.og_description.blank?
+    self.description
   end
 
   def og_image_jcrop_options

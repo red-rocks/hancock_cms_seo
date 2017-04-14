@@ -26,6 +26,9 @@ module Hancock::Seo
           field :robots, type: String, localize: Hancock::Seo.config.localize
 
           field :og_title, type: String, localize: Hancock::Seo.config.localize
+          field :og_description, type: String, localize: Hancock::Seo.config.localize
+          field :og_url, type: String, localize: Hancock::Seo.config.localize
+          field :og_type, type: String
         end
       end
     end

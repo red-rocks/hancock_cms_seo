@@ -1,4 +1,14 @@
 - if defined?(title) && !title.blank?
   meta{property='og:title' content=title}
+  
+- if defined?(description) && !description.blank?
+  meta{property='og:description' content=description}
+  
+- if defined?(type) && !type.blank?
+  meta{property='og:type' content=type}
+  
 - if defined?(image) && !image.blank?
   meta{property='og:image' content="//#{request.host_with_port}#{image}"}
+  
+- if defined?(url) && !url.blank?
+  meta{property='og:url' content=url}

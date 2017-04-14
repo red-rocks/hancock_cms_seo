@@ -6,9 +6,12 @@
     - send _cache_helper, [obj, seo_page, 'meta'].uniq.compact do
       = render 'shared/meta', obj: obj
 
-      - og_title = ((obj.get_og_title.blank? and seo_page) ? seo_page.get_og_title  : obj.get_og_title)
-      - og_image = ((obj.og_image.blank?     and seo_page) ? seo_page.og_image      : obj.og_image)
-      = render 'shared/og', title: og_title, image: og_image
+      / - og_title = ((obj.get_og_title.blank? and seo_page) ? seo_page.get_og_title  : obj.get_og_title)
+      / - og_image = ((obj.og_image.blank?     and seo_page) ? seo_page.og_image      : obj.og_image)
+      / - og_image = ((obj.og_image.blank?     and seo_page) ? seo_page.og_image      : obj.og_image)
+      / - og_image = ((obj.og_image.blank?     and seo_page) ? seo_page.og_image      : obj.og_image)
+      / = render 'shared/og', title: og_title, image: og_image
+      = render 'shared/og', og_tags_for(obj, seo_page)
         
   - unless obj.title.blank?
     - content_for :title do

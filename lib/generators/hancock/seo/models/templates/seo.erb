@@ -22,7 +22,7 @@ class <%= camelcased_class_name %> < Hancock::Seo::Seo
       self.title        = _obj.default_seo_title        if self.title.blank?
       self.keywords     = _obj.default_seo_keywords     if self.keywords.blank?
       self.description  = _obj.default_seo_description  if self.description.blank?
-      self.title        = _obj.default_seo_og_title     if self.title.blank?
+      self.og_title     = _obj.default_seo_og_title     if self.og_title.blank?
     end
   end
 

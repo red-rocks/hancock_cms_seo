@@ -14,7 +14,7 @@ module Hancock::Seo::SeoHelper
     _cache_key = "ym_counter".freeze
     ym_counter = Rails.cache.fetch(_cache_key) do
       if Hancock::Seo.config.cache_support
-        Hancock::Cache::Fragment.create_unless_exists(name: _cache_key, parents: hancock_cache_views_keys)
+        Hancock::Cache::Fragment.create_unless_exists(name: _cache_key, parents: hancock_cache_views_keys, parent_names: hancock_cache_views_keys)
         _cache_key = [_cache_key]
         _cache_key += hancock_cache_views_keys
       else
@@ -36,7 +36,7 @@ module Hancock::Seo::SeoHelper
     _cache_key = "ga_counter".freeze
     ga_counter = Rails.cache.fetch(_cache_key) do
       if Hancock::Seo.config.cache_support
-        Hancock::Cache::Fragment.create_unless_exists(name: _cache_key, parents: hancock_cache_views_keys)
+        Hancock::Cache::Fragment.create_unless_exists(name: _cache_key, parents: hancock_cache_views_keys, parent_names: hancock_cache_views_keys)
         _cache_key = [_cache_key]
         _cache_key += hancock_cache_views_keys
       else
@@ -56,5 +56,28 @@ module Hancock::Seo::SeoHelper
     ret << ga_counter unless ga_counter.blank?
 
     ret.join.html_safe
+  end
+
+  def og_tags_for(obj, alt_obj = nil)
+    og_title        = ((obj.get_og_title.blank?       and alt_obj) ? alt_obj.get_og_title       : obj.get_og_title)
+    og_description  = ((obj.get_og_description.blank? and alt_obj) ? alt_obj.get_og_description : obj.get_og_description)
+    og_type         = ((obj.og_type.blank?            and alt_obj) ? alt_obj.og_type            : obj.og_type)
+    og_url          = ((obj.og_url.blank?             and alt_obj) ? alt_obj.og_url             : obj.og_url)
+    og_image        = ((obj.og_image.blank?           and alt_obj) ? alt_obj.og_image           : obj.og_image)
+
+    og_url = try(:url_for, obj) rescue nil if og_url.blank?
+    og_url = try(:url_for, alt_obj) rescue nil if og_url.blank? and alt_obj
+    og_url = request.url if og_url.blank?
+
+    og_image = Settings.default_og_image
+    og_image = og_image.file.url if og_image
+
+    {
+      title:        og_title,
+      description:  og_description,
+      type:         og_type,
+      url:          og_url,
+      image:        og_image
+    }.reject { |_, v| v.blank? }
   end
 end

@@ -58,6 +58,18 @@ module Hancock::Seo
           if Hancock::Seo.config.gallery_support
             field :og_image, :hancock_image
           end
+          field :og_description, :text do
+            searchable true
+          end
+          field :og_url, :string do
+            searchable true
+          end
+          field :og_image, :hancock_image
+          field :og_type, :hancock_enum_with_custom do
+            enum do
+              Hancock::Seo::Seo::OG_TYPES
+            end
+          end
 
           if Hancock::Seo.config.cache_support
             group :caching, &Hancock::Cache::Admin.caching_block

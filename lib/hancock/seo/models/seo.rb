@@ -14,6 +14,33 @@ module Hancock::Seo
 
       include Hancock::Seo.orm_specific('Seo')
 
+      OG_TYPES = %w(article
+                    book
+                    books.author
+                    books.book
+                    books.genre
+                    business.business
+                    fitness.course
+                    game.achievement
+                    music.album
+                    music.playlist
+                    music.radio_station
+                    music.song
+                    place
+                    product
+                    product.group
+                    product.item
+                    profile
+                    restaurant.menu
+                    restaurant.menu_item
+                    restaurant.menu_section
+                    restaurant.restaurant
+                    video.episode
+                    video.movie
+                    video.other
+                    video.tv_show
+      ).freeze
+
       included do
 
         if Hancock.rails4?
@@ -100,7 +127,7 @@ module Hancock::Seo
           self.title        = _obj.default_seo_title        if self.title.blank?
           self.keywords     = _obj.default_seo_keywords     if self.keywords.blank?
           self.description  = _obj.default_seo_description  if self.description.blank?
-          self.title        = _obj.default_seo_og_title     if self.title.blank?
+          self.og_title     = _obj.default_seo_og_title     if self.og_title.blank?
         end
       end
 

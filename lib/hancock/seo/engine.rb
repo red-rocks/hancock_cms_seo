@@ -35,6 +35,12 @@ module Hancock::Seo
           _cache_key = "ga_counter".freeze
           Settings.ga_counter_id(default: '', kind: :string, label: 'Google Analitics ID'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns("main").where(key: "ga_counter_id").exists?
           Settings.ga_counter_html(default: '', kind: :html, label: 'Google Analitics HTML-код'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns("main").where(key: "ga_counter_html").exists?
+
+          if Settings.file_uploads_supported
+            if !RailsAdminSettings::Setting.ns("main").where(key: "default_og_image").exists?
+              Settings.default_og_image(kind: :image)
+            end
+          end
         end
       rescue
       end
