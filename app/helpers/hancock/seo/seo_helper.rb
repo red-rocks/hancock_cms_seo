@@ -69,8 +69,10 @@ module Hancock::Seo::SeoHelper
     og_url = try(:url_for, alt_obj) rescue nil if og_url.blank? and alt_obj
     og_url = request.url if og_url.blank?
 
-    og_image = Settings.default_og_image
-    # og_image = og_image.file.url if og_image # we are already url
+    if og_image.blank?
+      og_image = Settings.default_og_image
+      # og_image = og_image.file.url # we are already url
+    end
 
     {
       title:        og_title,
