@@ -70,7 +70,7 @@ module Hancock::Seo::SeoHelper
     og_url = request.url if og_url.blank?
 
     og_image = Settings.default_og_image
-    og_image = og_image.file.url if og_image
+    # og_image = og_image.file.url if og_image # we are already url
 
     {
       title:        og_title,
