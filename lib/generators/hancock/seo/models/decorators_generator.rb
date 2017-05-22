@@ -17,7 +17,7 @@ module Hancock::Seo::Models
 
     private
     def permitted_models
-      ['seo', 'sitemap_data']
+      ['seo', 'sitemap_data', 'event']
     end
 
   end

@@ -52,7 +52,18 @@ module Hancock::Seo
                 theme: '/assets/codemirror/themes/night.css',
               }
             end
+            help do
+              if @abstract_model.model.respond_to?(:insertions_fields)
+                if @abstract_model.model.insertions_fields.include?(name)
+                  'Можно использовать вставки'
+                end
+              end
+            end
             searchable true
+          end
+
+          if Hancock::Seo.config.insertions_support
+            group :insertions, &Hancock::Admin.insertions_block
           end
 
           Hancock::RailsAdminGroupPatch::hancock_cms_group(self, fields)

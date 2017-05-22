@@ -5,6 +5,8 @@ module Hancock::Seo
       include Hancock::Model
       include Hancock::Enableable
 
+      include Hancock::UserDefined
+
       include Hancock::Seo.orm_specific('Event')
 
       EVENT_TYPES = %w(
@@ -18,12 +20,21 @@ module Hancock::Seo
       ).freeze
 
       included do
+        def ya_counter_object
+          "window.yaCounter#{Settings.ym_counter_id}"
+        end
+        add_insertion :ya_counter_object
+        def ga_counter_object
+          "window.ga"
+        end
+        add_insertion :ga_counter_object
 
         acts_as_nested_set
 
         def function_name
           "hancock_seo_event_listener_#{self._id.to_s}"
         end
+        add_insertion :function_name
 
         def event_types=(val)
           self[:event_types] = val.reject { |t| t.blank? or t.strip.blank? }
@@ -32,6 +43,7 @@ module Hancock::Seo
         def event_types_str(joiner = ", ")
           self.event_types.join(joiner)
         end
+        add_insertion :event_types_str
 
         # def self.admin_can_default_actions
         #   [:show, :read, :edit, :update].freeze

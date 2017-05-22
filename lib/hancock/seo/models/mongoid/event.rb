@@ -12,7 +12,11 @@ module Hancock::Seo
           field :target_selector, type: String
           field :selector_function, type: String, default: -> { self.class::SELECTOR_FUNCTIONS.first }
 
-          field :listener_code, type: String
+          if Hancock::Seo.config.insertions_support
+            user_defined_field :listener_code, as: "listener_code_with_insertions"
+          else
+            field :listener_code, type: String
+          end
 
           scope :sorted, -> { order_by([:lft, :asc]) }
         end
