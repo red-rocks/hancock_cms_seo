@@ -4,8 +4,8 @@ module Hancock::Seo::EventsHelper
     Hancock::Seo::Event.enabled.sorted.to_a.map { |e|
       code  = []
       code << "(function(){"
-      # code << "function #{e.function_name}(e){#{e.listener_code}};"
-      code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
+      code << "function #{e.function_name}(e){#{e.listener_code}};"
+      # code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
       e.event_types.each do |type|
         next if type.blank? or type.strip.blank?
         add_event_listener_code = "addEventListener('#{type}', #{e.function_name});"

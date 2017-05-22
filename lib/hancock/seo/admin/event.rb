@@ -26,7 +26,7 @@ module Hancock::Seo
               Hancock::Seo::Event::EVENT_TYPES
             end
             pretty_value do
-              bindings[:object] and bindings[:object].event_type_str
+              (bindings[:object] and bindings[:object].event_types_str)
             end
             searchable true
           end
@@ -39,7 +39,21 @@ module Hancock::Seo
             end
             searchable true
           end
-          field :listener_code, :code_mirror do
+          field :ym_goal_data, :hancock_hash do
+            editor_type :full
+            help do
+              link = bindings[:view].link_to "Помощь", "https://yandex.ru/support/metrika/objects/reachgoal.xml", target: :_blank
+              "target, params_param1, params_param2 => {id: id, params: {param1: param1, param2: param2}}<br>#{link}".html_safe
+            end
+          end
+          field :ga_event_data, :hancock_hash do
+            editor_type :full
+            help do
+              link = bindings[:view].link_to "Помощь", "https://developers.google.com/analytics/devguides/collection/analyticsjs/events?hl=ru", target: :_blank
+              "hitType('event' by default), eventCategory, eventAction, eventLabel, eventValue<br>#{link}".html_safe
+            end
+          end
+          field :custom_listener_code, :code_mirror do
             config do
               {
                 mode: 'jsx',

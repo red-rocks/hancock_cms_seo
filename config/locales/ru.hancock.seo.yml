@@ -36,6 +36,7 @@ ru:
         target_selector: "Селектор цели"
         selector_function: "Метод поиска цели"
         listener_code: "Код слушателя"
+        custom_listener_code: "Кастом код слушателя"
 
   admin:
     actions:

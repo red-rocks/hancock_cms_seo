@@ -20,12 +20,12 @@ module Hancock::Seo
       ).freeze
 
       included do
-        def ya_counter_object
-          "window.yaCounter#{Settings.ym_counter_id}"
+        def ym_counter_object
+          "window.yaCounter#{Settings.ym_counter_id}" unless Settings.ym_counter_id.blank?
         end
-        add_insertion :ya_counter_object
+        add_insertion :ym_counter_object
         def ga_counter_object
-          "window.ga"
+          "window.ga" unless Settings.ga_counter_id.blank?
         end
         add_insertion :ga_counter_object
 
