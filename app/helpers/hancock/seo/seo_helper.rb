@@ -82,4 +82,5 @@ module Hancock::Seo::SeoHelper
       image:        og_image
     }.reject { |_, v| v.blank? }
   end
+  
 end

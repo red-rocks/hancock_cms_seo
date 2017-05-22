@@ -4,11 +4,13 @@ ru:
     seo:
       seo: SEO
       sitemap_data: Карта сайта
+      event: События
 
 
   mongoid: &mongoid
     models:
       hancock/seo/seo: SEO
+      hancock/seo/event: События
       hancock/seo/sitemap_data: Карта сайта
   activerecord:
     <<: *mongoid
@@ -28,6 +30,12 @@ ru:
         sitemap_lastmod: lastmod
         sitemap_changefreq: changefreq
         sitemap_priority: priority
+      hancock/seo/event:
+        event_types: "Типы событий"
+        event_types_str: "Типы событий"
+        target_selector: "Селектор цели"
+        selector_function: "Метод поиска цели"
+        listener_code: "Код слушателя"
 
   admin:
     actions:

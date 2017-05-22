@@ -23,20 +23,24 @@ module Hancock::Seo
   module Admin
     autoload :SitemapData,  'hancock/seo/admin/sitemap_data'
     autoload :Seo,          'hancock/seo/admin/seo'
+    autoload :Event,        'hancock/seo/admin/event'
   end
 
   module Models
     autoload :SitemapData,  'hancock/seo/models/sitemap_data'
     autoload :Seo,          'hancock/seo/models/seo'
+    autoload :Event,        'hancock/seo/models/event'
 
     module Mongoid
       autoload :SitemapData,  'hancock/seo/models/mongoid/sitemap_data'
       autoload :Seo,          'hancock/seo/models/mongoid/seo'
+      autoload :Event,        'hancock/seo/models/mongoid/event'
     end
 
     module ActiveRecord
       autoload :SitemapData,  'hancock/seo/models/active_record/sitemap_data'
       autoload :Seo,          'hancock/seo/models/active_record/seo'
+      autoload :Event,        'hancock/seo/models/active_record/event'
     end
   end
 
