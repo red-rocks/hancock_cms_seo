@@ -12,9 +12,6 @@ ru:
       hancock/seo/seo: SEO
       hancock/seo/event: События
       hancock/seo/sitemap_data: Карта сайта
-  activerecord:
-    <<: *mongoid
-
     attributes:
       hancock/seo/seo:
         seoable: Родительский элемент/страница
@@ -37,6 +34,12 @@ ru:
         selector_function: "Метод поиска цели"
         listener_code: "Код слушателя"
         custom_listener_code: "Кастом код слушателя"
+        ym_goal_data: "Параметры цели в ЯМ"
+        ga_event_data: "Параметры события в GA"
+
+
+  activerecord:
+    <<: *mongoid
 
   admin:
     actions:

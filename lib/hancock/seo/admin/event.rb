@@ -71,7 +71,7 @@ module Hancock::Seo
               ret << "e - текущее событие внутри коллбека."
               if @abstract_model.model.respond_to?(:insertions_fields)
                 if @abstract_model.model.insertions_fields.include?(name)
-                  ret <<'Можно использовать вставки/'
+                  ret << 'Можно использовать вставки.'
                 end
               end
               ret.join("<br>").html_safe
