@@ -32,7 +32,7 @@ module Hancock::Seo
         acts_as_nested_set
 
         def function_name
-          "hancock_seo_event_listener_#{self._id.to_s}"
+          "hancock_seo_event_listener_#{self._id.hash}"
         end
         add_insertion :function_name
 
