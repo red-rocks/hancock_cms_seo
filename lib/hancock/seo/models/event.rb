@@ -21,18 +21,18 @@ module Hancock::Seo
 
       included do
         def ym_counter_object
-          "window.yaCounter#{Settings.ym_counter_id}" unless Settings.ym_counter_id.blank?
+          "window.yaCounter#{Settings.ym_counter_id}" #unless Settings.ym_counter_id.blank?
         end
         add_insertion :ym_counter_object
         def ga_counter_object
-          "window.ga" unless Settings.ga_counter_id.blank?
+          "window.ga" #unless Settings.ga_counter_id.blank?
         end
         add_insertion :ga_counter_object
 
         acts_as_nested_set
 
         def function_name
-          "hancock_seo_event_listener_#{self._id.hash}"
+          "hancock_seo_event_listener_#{self._id.hash.to_s.sub("-", "0")}"
         end
         add_insertion :function_name
 

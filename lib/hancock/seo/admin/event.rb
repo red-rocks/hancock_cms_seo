@@ -43,7 +43,7 @@ module Hancock::Seo
             editor_type :full
             help do
               link = bindings[:view].link_to "Помощь", "https://yandex.ru/support/metrika/objects/reachgoal.xml", target: :_blank
-              "target, params_param1, params_param2 => {id: id, params: {param1: param1, param2: param2}}<br>#{link}".html_safe
+              "target, params_param1, params_param2 => {target: target, params: {param1: param1, param2: param2}}<br>#{link}".html_safe
             end
           end
           field :ga_event_data, :hancock_hash do

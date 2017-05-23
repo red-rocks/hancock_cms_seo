@@ -4,7 +4,7 @@ module Hancock::Seo
       module Event
         extend ActiveSupport::Concern
         included do
-          index({enabled: 1},                     {background: true})
+          index({enabled: 1}, {background: true})
 
           field :name, type: String
           field :desc, type: String
@@ -24,7 +24,11 @@ module Hancock::Seo
                 ret << ym_goal_js_code
               end
               if !ga_event_data.blank?
-                ret << ga_event_js_code
+                if !(ga_event_data[:eventCategory] || ga_event_data['eventCategory']).blank?
+                  if !(ga_event_data[:eventAction] || ga_event_data['eventAction']).blank?
+                    ret << ga_event_js_code
+                  end
+                end
               end
               ret.join
             else
@@ -36,12 +40,12 @@ module Hancock::Seo
             end
           end
 
-          field :ym_goal_data, type: Hash, default: {}
+          field :ym_goal_data, type: Hash, default: {target: ""}
           def ym_goal_data_formatted
             return @ym_goal_data_formatted if @ym_goal_data_formatted
             ret = {}
             ym_goal_data.keys.select { |k| k.to_s == "target" or k.to_s =~ /^params_.+/}.each do |k|
-              ret[k.to_s] = ym_goal_data[k]
+              ret[k.to_s] = ym_goal_data[k] if !ym_goal_data[k].blank? and !ym_goal_data[k].strip.blank?
             end
             @ym_goal_data_formatted = ret
           end
@@ -53,13 +57,14 @@ module Hancock::Seo
           add_insertion :ym_goal_data_formatted
           add_insertion :ym_goal_js_code
 
-          field :ga_event_data, type: Hash, default: {}
+          field :ga_event_data, type: Hash, default: {'hitType': 'event', 'eventCategory': '', 'eventAction': '', 'eventLabel': '', 'eventValue': ''}
           def ga_event_data_formatted
             return @ga_event_data_formatted if @ga_event_data_formatted
             ret = {'hitType': 'event'}
-            ym_goal_data.keys.select { |k| ['hitType', 'eventCategory', 'eventAction', 'eventLabel', 'eventValue'].include?(k.to_s) }.each do |k|
-              ret[k.to_s] = ga_event_data[k]
+            ga_event_data.keys.select { |k| ['hitType', 'eventCategory', 'eventAction', 'eventLabel', 'eventValue'].include?(k.to_s) }.each do |k|
+              ret[k.to_s] = ga_event_data[k] if !ga_event_data[k].blank? and !ga_event_data[k].strip.blank?
             end
+            ret['eventValue'] = ret['eventValue'].to_i if ret['eventValue']
             @ga_event_data_formatted = ret
           end
           def ga_event_js_code
