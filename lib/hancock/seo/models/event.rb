@@ -7,6 +7,10 @@ module Hancock::Seo
 
       include Hancock::UserDefined
 
+      if Hancock::Gallery.config.cache_support
+        include Hancock::Cache::Cacheable
+      end
+
       include Hancock::Seo.orm_specific('Event')
 
       EVENT_TYPES = %w(
