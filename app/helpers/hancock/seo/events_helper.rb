@@ -5,7 +5,6 @@ module Hancock::Seo::EventsHelper
       code  = []
       function_name = "window.#{e.function_name}"
       code << "#{function_name} || (#{function_name}= function(e){#{e.listener_code}});"
-      code << "window.#{e.function_name} || (window.#{e.function_name} = function(e){#{e.listener_code}});"
       # code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
       e.event_types.each do |type|
         next if type.blank? or type.strip.blank?
