@@ -16,16 +16,20 @@ module Hancock::Seo
     attr_accessor :user_abilities_support
     attr_accessor :ra_comments_support
 
+    attr_accessor :reset_events_function_name
+
     def initialize
       @localize = Hancock.config.localize
 
       @gallery_support = !!defined?(Hancock::Gallery)
       @cache_support  = !!defined?(Hancock::Cache)
-      @insertions_support = true 
+      @insertions_support = true
 
       @model_settings_support = !!defined?(RailsAdminModelSettings)
       @user_abilities_support = !!defined?(RailsAdminUserAbilities)
       @ra_comments_support = !!defined?(RailsAdminComments)
+
+      @reset_events_function_name = "window.resetHancockSeoEvents"
     end
   end
 end

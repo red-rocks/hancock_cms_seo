@@ -29,9 +29,11 @@ module Hancock::Seo::EventsHelper
 
   def render_seo_events_tags
     code  = []
-    code << "window.reloadYandexMetricsTargets || (window.reloadYandexMetricsTargets = function(){"
+    reset_events_function_name = Hancock::Seo.config.reset_events_function_name
+    code << "#{reset_events_function_name} || (#{reset_events_function_name} = function(){"
     Hancock::Seo::Event.enabled.sorted.to_a.each { |e|
-      code << "window.#{e.function_name} || (window.#{e.function_name}= function(e){#{e.listener_code}});"
+      function_name = "window.#{e.function_name}"
+      code << "#{function_name} || (#{function_name}= function(e){#{e.listener_code}});"
       # code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
       e.event_types.each do |type|
         next if type.blank? or type.strip.blank?
@@ -52,7 +54,7 @@ module Hancock::Seo::EventsHelper
         end
       end
     }
-    code << "}); window.reloadYandexMetricsTargets();"
+    code << "}); #{reset_events_function_name}();"
     javascript_tag code.join.html_safe, defer: true
   end
 
