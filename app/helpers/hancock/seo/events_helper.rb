@@ -4,7 +4,7 @@ module Hancock::Seo::EventsHelper
     Hancock::Seo::Event.enabled.sorted.to_a.map do |e|
       code  = []
       function_name = "window.#{e.function_name}"
-      code << "#{function_name} || (#{function_name}= function(e){#{e.listener_code}});"
+      code << "#{function_name} || (#{function_name} = function(e){#{e.listener_code}});"
       # code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
       e.event_types.each do |type|
         next if type.blank? or type.strip.blank?
@@ -18,9 +18,9 @@ module Hancock::Seo::EventsHelper
           when 'querySelectorAll'
             "#{event_elem}.forEach(function(){this.#{add_event_listener_code}});"
           when 'querySelector'
-            "#{event_elem}.#{add_event_listener_code}"
+            "((var elem = #{event_elem}) && elem.#{add_event_listener_code});"
           else
-            "#{event_elem}.#{add_event_listener_code}"
+            "((var elem = #{event_elem}) && elem.#{add_event_listener_code});"
           end
         end
       end
