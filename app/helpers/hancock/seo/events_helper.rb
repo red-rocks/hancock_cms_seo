@@ -8,19 +8,19 @@ module Hancock::Seo::EventsHelper
       # code << "function #{e.function_name}(e){#{e.listener_code_with_insertions}};"
       e.event_types.each do |type|
         next if type.blank? or type.strip.blank?
-        add_event_listener_code = "addEventListener('#{type}', window.#{e.function_name});"
+        add_event_listener_code = "addEventListener('#{type}', window.#{e.function_name})"
         if e.target_selector.blank?
           event_elem = "document"
-          code << "#{event_elem}.#{add_event_listener_code}"
+          code << "#{event_elem}.#{add_event_listener_code};"
         else
           event_elem = "document.#{e.selector_function}('#{e.target_selector}')"
           code << case e.selector_function
           when 'querySelectorAll'
-            "#{event_elem}.forEach(function(){this.#{add_event_listener_code}});"
+            "#{event_elem}.forEach(function(){this.#{add_event_listener_code};});"
           when 'querySelector'
-            "((var elem = #{event_elem}) && elem.#{add_event_listener_code});"
+            "((elem = #{event_elem}) && elem.#{add_event_listener_code});"
           else
-            "((var elem = #{event_elem}) && elem.#{add_event_listener_code});"
+            "((elem = #{event_elem}) && elem.#{add_event_listener_code});"
           end
         end
       end
