@@ -71,7 +71,7 @@ module Hancock::Seo::SeoHelper
 
     if og_image.blank?
       og_image = Settings.default_og_image
-      unless og_image.is_a?(String)
+      if og_image and !og_image.is_a?(String)
         og_image = og_image.url # diff between ack_rails_admin_settings v.1.2.3.2 and v.1.2.3.3
       end
     end
