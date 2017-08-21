@@ -49,18 +49,6 @@ module Hancock::Seo
           belongs_to :seoable, polymorphic: true, optional: true, touch: true
         end
 
-        def self.goto_hancock
-          self.where(seoable_type: /^Enjoy/).all.map { |s|
-            unless s.seoable.blank?
-              s.seoable_type = s.seoable_type.sub("Enjoy", "Hancock")
-              s.seoable_type = "Hancock::Pages::Page" if s.seoable_type == "Hancock::Page"
-              s.seoable_type = "Hancock::Catalog::Category" if s.seoable_type == "Hancock::Catalog::ItemCategory"
-              s.seoable_type = "Hancock::News::Category" if s.seoable_type == "Hancock::News::NewsCategory"
-            end
-            s.save
-          }
-        end
-
         if Hancock::Seo.config.gallery_support
           set_default_auto_crop_params_for(:og_image)
           hancock_cms_attached_file(:og_image)
