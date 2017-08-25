@@ -76,6 +76,10 @@ module Hancock::Seo
           Hancock::Seo::SitemapData.where(:id.in => ids_with_empty_objects)
         end
 
+        def self.rails_admin_navigation_icon
+          'fa fa-sitemap'.freeze
+        end
+
       end
     end
   end

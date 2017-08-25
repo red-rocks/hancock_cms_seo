@@ -79,6 +79,10 @@ module Hancock::Seo
           ret.freeze
         end
 
+        def self.rails_admin_navigation_icon
+          'fa fa-check-square-o'.freeze
+        end
+
       end
 
     end
