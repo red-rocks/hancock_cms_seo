@@ -106,6 +106,10 @@ module Hancock::Seo
           Hancock::Seo::Seo.where(:id.in => ids_with_empty_objects)
         end
 
+        def self.rails_admin_navigation_icon
+          'fa fa-search'.freeze
+        end
+
       end
 
       def set_default_seo
@@ -120,11 +124,15 @@ module Hancock::Seo
       end
 
       def og_image_styles
-        {thumb: "160x120>", standard: "800x600>"}
+        {
+            main: "810x360>",
+            standard: "810x360>",
+            thumb: "270x120>"
+        }
       end
 
       def og_image_jcrop_options
-        {}
+        { aspectRatio: 810.0/360.0 }
       end
 
     end
