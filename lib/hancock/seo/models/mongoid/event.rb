@@ -51,8 +51,11 @@ module Hancock::Seo
           end
           def ym_goal_js_code
             unless ym_counter_object.blank?
-              @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});"
+              @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}"
             end
+          end
+          def ym_goal_debug_js_code
+            " alert('YM event: #{ym_goal_data_formatted}');" if Rails.env.production?
           end
           add_insertion :ym_goal_data_formatted
           add_insertion :ym_goal_js_code
@@ -69,8 +72,11 @@ module Hancock::Seo
           end
           def ga_event_js_code
             unless ga_counter_object.blank?
-              @ga_event_js_code ||= "#{ga_counter_object}('send', #{(ga_event_data_formatted || {'hitType': 'event'}).to_json});"
+              @ga_event_js_code ||= "#{ga_counter_object}('send', #{(ga_event_data_formatted || {'hitType': 'event'}).to_json});#{ga_event_debug_js_code}"
             end
+          end
+          def ga_event_debug_js_code
+            " alert('GA event: #{ga_event_data_formatted}');" if Rails.env.production?
           end
           add_insertion :ga_event_data_formatted
           add_insertion :ga_event_js_code
