@@ -8,7 +8,7 @@ module Hancock::Seo
         include Hancock::Gallery::Paperclipable
       end
 
-      if Hancock::Gallery.config.cache_support
+      if Hancock::Seo.config.cache_support
         include Hancock::Cache::Cacheable
       end
 

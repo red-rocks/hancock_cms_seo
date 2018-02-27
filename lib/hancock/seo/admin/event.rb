@@ -79,6 +79,10 @@ module Hancock::Seo
             searchable true
           end
 
+          if Hancock::Seo.config.cache_support
+            group :caching, &Hancock::Cache::Admin.caching_block
+          end
+
           if Hancock::Seo.config.insertions_support
             group :insertions, &Hancock::Admin.insertions_block
           end

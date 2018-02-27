@@ -7,7 +7,7 @@ module Hancock::Seo
 
       include Hancock::UserDefined
 
-      if Hancock::Gallery.config.cache_support
+      if Hancock::Seo.config.cache_support
         include Hancock::Cache::Cacheable
       end
 
