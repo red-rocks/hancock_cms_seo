@@ -21,12 +21,12 @@ module Hancock::Seo
             if custom_listener_code.blank?
               ret = []
               if ym_goal_data and !(ym_goal_data[:target] || ym_goal_data['target']).blank?
-                ret << ym_goal_js_code
+                ret << ym_goal_debug_js_code << ym_goal_js_code
               end
               if !ga_event_data.blank?
                 if !(ga_event_data[:eventCategory] || ga_event_data['eventCategory']).blank?
                   if !(ga_event_data[:eventAction] || ga_event_data['eventAction']).blank?
-                    ret << ga_event_js_code
+                    ret << ga_event_debug_js_code << ga_event_js_code
                   end
                 end
               end
@@ -51,11 +51,11 @@ module Hancock::Seo
           end
           def ym_goal_js_code
             unless ym_counter_object.blank?
-              @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}"
+              @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}".strip
             end
           end
           def ym_goal_debug_js_code
-            " alert('YM event: #{ym_goal_data_formatted}');" if Rails.env.production?
+            "alert('YM event: #{ym_goal_data_formatted}');" unless Rails.env.production?
           end
           add_insertion :ym_goal_data_formatted
           add_insertion :ym_goal_js_code
@@ -72,11 +72,11 @@ module Hancock::Seo
           end
           def ga_event_js_code
             unless ga_counter_object.blank?
-              @ga_event_js_code ||= "#{ga_counter_object}('send', #{(ga_event_data_formatted || {'hitType': 'event'}).to_json});#{ga_event_debug_js_code}"
+              @ga_event_js_code ||= "#{ga_counter_object}('send', #{(ga_event_data_formatted || {'hitType': 'event'}).to_json});"
             end
           end
           def ga_event_debug_js_code
-            " alert('GA event: #{ga_event_data_formatted}');" if Rails.env.production?
+            "alert('GA event: #{ga_event_data_formatted}');" unless Rails.env.production?
           end
           add_insertion :ga_event_data_formatted
           add_insertion :ga_event_js_code
