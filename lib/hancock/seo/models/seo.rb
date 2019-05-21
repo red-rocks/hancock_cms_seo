@@ -11,6 +11,9 @@ module Hancock::Seo
       if Hancock::Seo.config.cache_support
         include Hancock::Cache::Cacheable
       end
+      if Hancock::Seo.config.model_settings_support
+        include Hancock::Settingable
+      end
 
       include Hancock::Seo.orm_specific('Seo')
 
@@ -50,7 +53,7 @@ module Hancock::Seo
         end
 
         if Hancock::Seo.config.gallery_support
-          set_default_auto_crop_params_for(:og_image)
+          # set_default_auto_crop_params_for(:og_image)
           hancock_cms_attached_file(:og_image)
         end
 
