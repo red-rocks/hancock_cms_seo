@@ -56,9 +56,7 @@ module Hancock::Seo
 
         if Hancock::Seo.config.gallery_support
           # set_default_auto_crop_params_for(:og_image)
-          puts 'hancock_cms_attached_file'
           hancock_cms_attached_file(:og_image)
-          puts 'hancock_cms_attached_file'
         end
 
         before_create :set_default_seo
