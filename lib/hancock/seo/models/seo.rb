@@ -4,8 +4,10 @@ module Hancock::Seo
       extend ActiveSupport::Concern
       include Hancock::Model
       include Hancock::Enableable
+
       if Hancock::Seo.config.gallery_support
-        include Hancock::Gallery::Paperclipable
+        # include Hancock::Gallery::Paperclipable
+        include Hancock::Gallery::Uploadable
       end
 
       if Hancock::Seo.config.cache_support
@@ -54,12 +56,12 @@ module Hancock::Seo
 
         if Hancock::Seo.config.gallery_support
           # set_default_auto_crop_params_for(:og_image)
+          puts 'hancock_cms_attached_file'
           hancock_cms_attached_file(:og_image)
+          puts 'hancock_cms_attached_file'
         end
 
-        before_create do
-          set_default_seo
-        end
+        before_create :set_default_seo
 
         before_save do
           self.seoable and self.seoable.touch
@@ -113,31 +115,41 @@ module Hancock::Seo
           'fa fa-search'.freeze
         end
 
-      end
-
-      def set_default_seo
-        _obj = self.seoable
-        if _obj and _obj.set_default_seo?
-          self.h1           = _obj.default_seo_h1           if self.h1.blank?
-          self.title        = _obj.default_seo_title        if self.title.blank?
-          self.keywords     = _obj.default_seo_keywords     if self.keywords.blank?
-          self.description  = _obj.default_seo_description  if self.description.blank?
-          self.og_title     = _obj.default_seo_og_title     if self.og_title.blank?
+        def set_default_seo
+          _obj = self.seoable
+          if _obj and _obj.set_default_seo?
+            self.h1           = _obj.default_seo_h1           if self.h1.blank?
+            self.title        = _obj.default_seo_title        if self.title.blank?
+            self.keywords     = _obj.default_seo_keywords     if self.keywords.blank?
+            self.description  = _obj.default_seo_description  if self.description.blank?
+            self.og_title     = _obj.default_seo_og_title     if self.og_title.blank?
+          end
         end
+  
+        def og_image_styles
+          {
+              main: "810x360>",
+              standard: "810x360>",
+              thumb: "270x120>"
+          }
+        end
+  
+        def og_image_jcrop_options
+          { aspectRatio: 810.0/360.0 }
+        end
+
       end
 
-      def og_image_styles
-        {
-            main: "810x360>",
-            standard: "810x360>",
-            thumb: "270x120>"
-        }
-      end
-
-      def og_image_jcrop_options
-        { aspectRatio: 810.0/360.0 }
+      class_methods do
+  
+        def inherited(subclass)
+          puts 'og_image inherited'
+          subclass.hancock_cms_attached_file(:og_image)
+        end
+  
       end
 
     end
+
   end
 end

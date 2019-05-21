@@ -42,7 +42,7 @@ module Hancock::Seo::SeoHelper
     og_type         = ((obj.og_type.blank?            and alt_obj) ? alt_obj.og_type            : obj.og_type)
     og_url          = ((obj.og_url.blank?             and alt_obj) ? alt_obj.og_url             : obj.og_url)
     # og_image        = ((obj.og_image.blank?           and alt_obj) ? alt_obj.og_image           : obj.og_image)
-    og_image_obj     = ((!obj.og_image?               and alt_obj) ? alt_obj                    : obj)
+    og_image_obj     = ((!obj.og_image.blank?         and alt_obj) ? alt_obj                    : obj)
 
     if @clear_og_url
       og_url = "" unless og_url.blank?
@@ -52,8 +52,13 @@ module Hancock::Seo::SeoHelper
       og_url = request.url if og_url.blank?
     end
 
-    if !og_image_obj.og_image?
-      og_image = Settings.default_og_image
+    unless og_image_obj.og_image.blank?
+      settings_scope = if Hancock::Seo.config.model_settings_support
+        Hancock::Seo::Seo.settings
+      else
+        Settings
+      end
+      og_image = settings_scope.default_og_image
       if og_image and !og_image.is_a?(String)
         og_image = og_image.url
       end

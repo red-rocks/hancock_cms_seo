@@ -2,6 +2,7 @@ module Hancock::Seo::Seoable
   extend ActiveSupport::Concern
   LOCALIZED_FIELDS = [:h1, :title, :keywords, :description, :author, :og_title, :og_description, :og_url]
   FIELDS = LOCALIZED_FIELDS + [:og_image, :robots, :og_type]
+  METHS = [:get_og_image, :og_image?]
 
   included do
     has_one :seo, as: :seoable, autosave: true, class_name: "Hancock::Seo::Seo"
@@ -14,6 +15,7 @@ module Hancock::Seo::Seoable
       delegate(*(LOCALIZED_FIELDS.map {|f| "#{f}_translations".to_sym }), to: :seo)
       delegate(*(LOCALIZED_FIELDS.map {|f| "#{f}_translations=".to_sym }), to: :seo)
     end
+    delegate(*METHS, to: :seo)
 
     alias seo_without_build seo
     def seo
