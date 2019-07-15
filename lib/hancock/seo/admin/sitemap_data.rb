@@ -9,6 +9,7 @@ module Hancock::Seo
         end
 
         Proc.new {
+          navigation_icon('mdi mdi-sitemap')
           navigation_label(!nav_label.blank? ? nav_label : 'SEO')
 
           list do

@@ -109,10 +109,6 @@ module Hancock::Seo
           Hancock::Seo::Seo.where(:id.in => ids_with_empty_objects)
         end
 
-        def self.rails_admin_navigation_icon
-          'fa fa-search'.freeze
-        end
-
         def set_default_seo
           _obj = self.seoable
           if _obj and _obj.set_default_seo?
