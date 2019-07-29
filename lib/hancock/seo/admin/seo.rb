@@ -22,7 +22,7 @@ module Hancock::Seo
             read_only true
             pretty_value do
               v = bindings[:view]
-              [value].flatten.select(&:present?).collect do |associated|
+              Array(value).flatten.select(&:present?).collect do |associated|
                 amc = polymorphic? ? RailsAdmin.config(associated) : associated_model_config # perf optimization for non-polymorphic associations
                 am = amc.abstract_model
                 wording = associated.send(amc.object_label_method)
@@ -65,7 +65,7 @@ module Hancock::Seo
           field :og_url, :string do
             searchable true
           end
-          field :og_image, :hancock_image
+          
           field :og_type, :hancock_enum_with_custom do
             enum do
               Hancock::Seo::Seo::OG_TYPES

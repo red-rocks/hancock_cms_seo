@@ -61,8 +61,14 @@ module Hancock::Seo
 
         before_create :set_default_seo
 
-        before_save do
-          self.seoable and self.seoable.touch
+        before_save :touch_seoable
+        def touch_seoable
+          if seoable
+            # puts seoable.inspect
+            # puts seoable.embedded?
+            # seoable.touch unless seoable.embedded?
+            seoable.touch
+          end
         end
 
 
