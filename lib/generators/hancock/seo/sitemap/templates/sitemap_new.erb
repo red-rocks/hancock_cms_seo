@@ -1,0 +1,81 @@
+require 'rubygems'
+require 'sitemap_generator'
+SitemapGenerator::Interpreter.send :include, ::ApplicationHelper
+
+# saved_default_url_options_host      = default_url_options[:host]
+saved_default_url_options_only_path = default_url_options[:only_path]
+default_url_options[:only_path] = true
+# default_url_options[:host] = ""
+
+SitemapGenerator::Sitemap.verbose = Rails.env.development?
+SitemapGenerator::Sitemap.default_host = Rails.env.production? ? '<%= host %>' : "http://0.0.0.0:3025"
+# SitemapGenerator::Sitemap.sitemaps_path = '/'
+SitemapGenerator::Sitemap.create_index = true
+SitemapGenerator::Sitemap.include_root = false
+SitemapGenerator::Sitemap.compress = Rails.env.production?
+SitemapGenerator::Sitemap.create do
+  
+  add '/'
+
+  group(sitemaps_path: 'sitemaps/', filename: :news) do
+    Hancock::News::News.all.each do |n|
+      next unless n.sitemap_show
+      obj = n
+      add(news_path(obj), :news => {
+        :publication_name => obj.full_title,
+        :publication_language => "ru",
+        :title => obj.title,
+        :keywords => obj.keywords,
+        :publication_date => obj.publication_time.strftime("%Y-%m-%d"),
+        :genres => "PressRelease"
+      }) rescue nil
+    end
+  end
+
+  group(sitemaps_path: 'sitemaps/', filename: :sitemap) do
+    Hancock::Seo::SitemapData.enabled.for_sitemap.all.to_a.each do |sd|
+      obj = sd.sitemap_data_field
+      next if(!obj or (obj.is_a?(Hancock::Pages::Page) and obj.fullpath == "/"))
+
+      begin
+        _lastmod = sd.sitemap_lastmod.to_date  unless sd.sitemap_lastmod.nil?
+        _lastmod = sd.updated_at.to_date       unless sd.updated_at.nil?        if _lastmod.nil?
+        _lastmod = sd.created_at.to_date       unless sd.created_at.nil?        if _lastmod.nil?
+        _url = case obj.class
+        when Hancock::News::Category
+          news_category_path(obj)
+        when Hancock::News::News
+          # add(news_path(obj), :news => {
+          #   :publication_name => obj.full_title,
+          #   :publication_language => "ru",
+          #   :title => obj.title,
+          #   :keywords => obj.keywords,
+          #   :publication_date => obj.time.strftime("%Y-%m-%d"),
+          #   :genres => "PressRelease"
+          # })
+          # nil
+          news_path(obj)
+        else
+          (obj.is_a?(Hancock::Pages::Page) ? obj.fullpath : url_for(obj)) rescue nil
+        end
+        
+        unless _url.blank?
+          add _url,
+            :lastmod      => _lastmod,
+            :changefreq   => "#{sd.sitemap_changefreq.blank? ? 'daily' : sd.sitemap_changefreq}",
+            :priority     => (sd.sitemap_priority.nil?       ? 0.9     : sd.sitemap_priority)
+        end
+      rescue Exception => ex
+        puts ex.message
+        puts ex.backtrace
+      end
+    end
+  end
+
+end
+# default_url_options[:host]      = saved_default_url_options_host
+default_url_options[:only_path] = saved_default_url_options_only_path
+
+if Rails.env.production?
+  SitemapGenerator::Sitemap.ping_search_engines # Not needed if you use the rake tasks
+end

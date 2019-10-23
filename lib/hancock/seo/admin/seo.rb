@@ -57,7 +57,8 @@ module Hancock::Seo
           end
 
           if Hancock::Seo.config.gallery_support
-            field :og_image, :hancock_image
+            # field :og_image, :hancock_image
+            field :og_image, :hancock_shrine
           end
           field :og_description, :text do
             searchable true

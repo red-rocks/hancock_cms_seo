@@ -60,12 +60,12 @@ module Hancock::Seo
           add_insertion :ym_goal_data_formatted
           add_insertion :ym_goal_js_code
 
-          field :ga_event_data, type: Hash, default: {'hitType': 'event', 'eventCategory': '', 'eventAction': '', 'eventLabel': '', 'eventValue': ''}
+          field :ga_event_data, type: Hash, default: {'hitType' => 'event', 'eventCategory' => '', 'eventAction' => '', 'eventLabel' => '', 'eventValue' => ''}
           def ga_event_data_formatted
             return @ga_event_data_formatted if @ga_event_data_formatted
-            ret = {'hitType': 'event'}
+            ret = {'hitType' => 'event'}
             ga_event_data.keys.select { |k| ['hitType', 'eventCategory', 'eventAction', 'eventLabel', 'eventValue'].include?(k.to_s) }.each do |k|
-              ret[k.to_s] = ga_event_data[k] if !ga_event_data[k].blank? and !ga_event_data[k].strip.blank?
+              ret[k.to_s] = ga_event_data[k] if !ga_event_data[k].blank? and !ga_event_data[k].strip.blank?              
             end
             ret['eventValue'] = ret['eventValue'].to_i if ret['eventValue']
             @ga_event_data_formatted = ret
