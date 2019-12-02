@@ -11,6 +11,7 @@ module Hancock::Seo
         Proc.new {
           navigation_icon('mdi mdi-clipboard-check-outline')
           navigation_label(!nav_label.blank? ? nav_label : 'SEO')
+          label_plural "События (YM, GA, GTag)"
 
           list do
             # scopes [nil, :enabled, :disconnected]
@@ -22,62 +23,89 @@ module Hancock::Seo
           field :enabled, :toggle
           field :name
           field :desc, :text
-          field :event_types, :hancock_array do
-            enum do
-              Hancock::Seo::Event::EVENT_TYPES
-            end
-            pretty_value do
-              (bindings[:object] and bindings[:object].event_types_str)
-            end
-            searchable true
-          end
-          field :target_selector, :text do
-            searchable true
-          end
-          field :selector_function, :hancock_enum do
-            enum do
-              Hancock::Seo::Event::SELECTOR_FUNCTIONS
-            end
-            searchable true
-          end
-          field :ym_goal_data, :hancock_hash do
-            editor_type :full
-            help do
-              link = bindings[:view].link_to "Помощь", "https://yandex.ru/support/metrika/objects/reachgoal.xml", target: :_blank
-              "target, params_param1, params_param2 => {target: target, params: {param1: param1, param2: param2}}<br>#{link}".html_safe
-            end
-          end
-          field :ga_event_data, :hancock_hash do
-            editor_type :full
-            help do
-              link = bindings[:view].link_to "Помощь", "https://developers.google.com/analytics/devguides/collection/analyticsjs/events?hl=ru", target: :_blank
-              "hitType('event' by default), eventCategory, eventAction, eventLabel, eventValue<br>#{link}".html_safe
-            end
-          end
-          field :custom_listener_code, :code_mirror do
-            config do
-              {
-                mode: 'jsx',
-                theme: 'night',
-              }
-            end
-            assets do
-              {
-                mode: '/assets/codemirror/modes/jsx.js',
-                theme: '/assets/codemirror/themes/night.css',
-              }
-            end
-            help do
-              ret = []
-              ret << "e - текущее событие внутри коллбека."
-              if @abstract_model.model.respond_to?(:insertions_fields)
-                if @abstract_model.model.insertions_fields.include?(name)
-                  ret << 'Можно использовать вставки.'
-                end
+
+          group :target do
+            active false
+            field :event_types, :hancock_array do
+              enum do
+                Hancock::Seo::Event::EVENT_TYPES
               end
-              ret.join("<br>").html_safe
+              pretty_value do
+                (bindings[:object] and bindings[:object].event_types_str)
+              end
+              searchable true
             end
-            searchable true
+            field :target_selector, :text do
+              searchable true
+            end
+            field :selector_function, :hancock_enum do
+              enum do
+                Hancock::Seo::Event::SELECTOR_FUNCTIONS
+              end
+              searchable true
+            end
+          end
+
+          group :ym do
+            active false
+            field :ym_goal_data, :hancock_hash do
+              editor_type :full
+              help do
+                link = bindings[:view].link_to "Помощь", "https://yandex.ru/support/metrika/objects/reachgoal.xml", target: :_blank
+                "target, params_param1, params_param2 => {target: target, params: {param1: param1, param2: param2}}<br>#{link}".html_safe
+              end
+            end
+          end
+
+          group :ga do
+            active false
+            field :ga_event_data, :hancock_hash do
+              editor_type :full
+              help do
+                link = bindings[:view].link_to "Помощь", "https://developers.google.com/analytics/devguides/collection/analyticsjs/events?hl=ru", target: :_blank
+                "hitType('event' by default), eventCategory, eventAction, eventLabel, eventValue<br>#{link}".html_safe
+              end
+            end
+          end
+          group :gtag do
+            active false
+            field :gtag_action, :string
+            field :gtag_event_data, :hancock_hash do
+              editor_type :full
+              help do
+                link = bindings[:view].link_to "Помощь", "https://developers.google.com/analytics/devguides/collection/gtagjs?hl=ru", target: :_blank
+                "#{link}".html_safe
+              end
+            end
+          end
+
+          group :custom_code do
+            active false
+            field :custom_listener_code, :code_mirror do
+              config do
+                {
+                  mode: 'jsx',
+                  theme: 'night',
+                }
+              end
+              assets do
+                {
+                  mode: '/assets/codemirror/modes/jsx.js',
+                  theme: '/assets/codemirror/themes/night.css',
+                }
+              end
+              help do
+                ret = []
+                ret << "e - текущее событие внутри коллбека."
+                if @abstract_model.model.respond_to?(:insertions_fields)
+                  if @abstract_model.model.insertions_fields.include?(name)
+                    ret << 'Можно использовать вставки.'
+                  end
+                end
+                ret.join("<br>").html_safe
+              end
+              searchable true
+            end
           end
 
           if Hancock::Seo.config.cache_support

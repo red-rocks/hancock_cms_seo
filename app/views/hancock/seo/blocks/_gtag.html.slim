@@ -1,0 +1,8 @@
+= javascript_include_tag "//www.googletagmanager.com/gtag/js?id=#{counter_id}", async: true
+<script async src="https:"></script>
+javascript:
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '#{counter_id}');

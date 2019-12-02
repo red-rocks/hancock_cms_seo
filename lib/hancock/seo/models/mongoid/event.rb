@@ -18,26 +18,29 @@ module Hancock::Seo
             field :custom_listener_code, type: String
           end
           def listener_code
-            if custom_listener_code.blank?
-              ret = []
-              if ym_goal_data and !(ym_goal_data[:target] || ym_goal_data['target']).blank?
-                ret << ym_goal_debug_js_code << ym_goal_js_code
-              end
-              if !ga_event_data.blank?
-                if !(ga_event_data[:eventCategory] || ga_event_data['eventCategory']).blank?
-                  if !(ga_event_data[:eventAction] || ga_event_data['eventAction']).blank?
-                    ret << ga_event_debug_js_code << ga_event_js_code
-                  end
-                end
-              end
-              ret.join
-            else
+            unless custom_listener_code.blank?
               if Hancock::Seo.config.insertions_support
-                listener_code_with_insertions
+                return listener_code_with_insertions
               else
-                custom_listener_code
+                return custom_listener_code
               end
             end
+
+            ret = []
+            if ym_goal_data and !(ym_goal_data[:target] || ym_goal_data['target']).blank?
+              ret << ym_goal_debug_js_code << ym_goal_js_code
+            end
+            if !ga_event_data.blank?
+              if !(ga_event_data[:eventCategory] || ga_event_data['eventCategory']).blank?
+                if !(ga_event_data[:eventAction] || ga_event_data['eventAction']).blank?
+                  ret << ga_event_debug_js_code << ga_event_js_code
+                end
+              end
+            end
+            if !gtag_action.blank?
+              ret << gtag_event_debug_js_code << gtag_event_js_code
+            end
+            ret.join
           end
 
           field :ym_goal_data, type: Hash, default: {target: ""}
@@ -60,6 +63,7 @@ module Hancock::Seo
           add_insertion :ym_goal_data_formatted
           add_insertion :ym_goal_js_code
 
+
           field :ga_event_data, type: Hash, default: {'hitType' => 'event', 'eventCategory' => '', 'eventAction' => '', 'eventLabel' => '', 'eventValue' => ''}
           def ga_event_data_formatted
             return @ga_event_data_formatted if @ga_event_data_formatted
@@ -76,10 +80,33 @@ module Hancock::Seo
             end
           end
           def ga_event_debug_js_code
-            "alert('GA event: #{ga_event_data_formatted}');" unless Rails.env.production?
+            "alert('GA event: #{ga_event_data_formatted.to_json}');" unless Rails.env.production?
           end
           add_insertion :ga_event_data_formatted
           add_insertion :ga_event_js_code
+
+
+
+          field :gtag_action, type: String, default: ""
+          field :gtag_event_data, type: Hash, default: {}
+          def gtag_event_data_formatted
+            return @gtag_event_data_formatted if @gtag_event_data_formatted
+            ret = {}
+            ga_event_data.each do |k, v|
+              ret[k.to_s] = v if !v.blank? and !v.strip.blank?              
+            end
+            @gtag_event_data_formatted = ret
+          end
+          def gtag_event_js_code
+            if !gtag_counter_object.blank? and !gtag_action.blank?
+              @gtag_event_js_code ||= "#{gtag_counter_object}('event', '#{gtag_action}',#{(gtag_event_data_formatted || {}).to_json});"
+            end
+          end
+          def gtag_event_debug_js_code
+            "alert('GTag event: #{gtag_event_data_formatted.to_json}');" unless Rails.env.production?
+          end
+          add_insertion :gtag_event_data_formatted
+          add_insertion :gtag_event_js_code
 
 
           scope :sorted, -> { order_by([:lft, :asc]) }

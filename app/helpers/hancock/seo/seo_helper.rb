@@ -8,6 +8,10 @@ module Hancock::Seo::SeoHelper
     return nil if counter_id.blank?
     render partial: "hancock/seo/blocks/ga", locals: {counter_id: counter_id}
   end
+  def hancock_gtag_counter_tag(counter_id)
+    return nil if counter_id.blank?
+    render partial: "hancock/seo/blocks/gtag", locals: {counter_id: counter_id}
+  end
   def render_hancock_counters(opts = {})
     ret = []
 
@@ -33,8 +37,19 @@ module Hancock::Seo::SeoHelper
     end
     ret << ga_counter unless ga_counter.blank?
 
+    _cache_key = "gtag_counter".freeze
+    _html = send(settings_method, 'gtag_counter_html', default: '', kind: :code, label: 'GTag HTML-код'.freeze, settings_scope: Hancock::Seo::Seo.settings)
+    gtag_counter = unless _html.blank?
+      _html
+    else
+      gtag_counter_id = opts[:ga_counter_id] || send(settings_method, 'gtag_counter_id', default: '', kind: :string, label: 'GTag ID'.freeze, settings_scope: Hancock::Seo::Seo.settings).strip
+      gtag_counter_id.blank? ? nil : hancock_gtag_counter_tag(gtag_counter_id)
+    end
+    ret << gtag_counter unless gtag_counter.blank?
+
     ret.join.html_safe
   end
+  
 
   def og_tags_for(obj, alt_obj = nil)
     og_title        = ((obj.get_og_title.blank?       and alt_obj) ? alt_obj.get_og_title       : obj.get_og_title)

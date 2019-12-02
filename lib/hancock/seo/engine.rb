@@ -44,6 +44,10 @@ module Hancock::Seo
           settings_scope.ga_counter_id(default: '', kind: :string, label: 'Google Analitics ID'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns(ns).where(key: "ga_counter_id").exists?
           settings_scope.ga_counter_html(default: '', kind: :html, label: 'Google Analitics HTML-код'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns(ns).where(key: "ga_counter_html").exists?
 
+          _cache_key = "gtag_counter".freeze
+          settings_scope.gtag_counter_id(default: '', kind: :string, label: 'GTag ID'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns(ns).where(key: "gtag_counter_id").exists?
+          settings_scope.gtag_counter_html(default: '', kind: :html, label: 'GTag HTML-код'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns(ns).where(key: "gtag_counter_html").exists?
+
           Hancock::Seo::Seo.settings.default_title
           settings_scope.default_title(default: '', kind: :string, label: 'default_title'.freeze, cache_keys: _cache_key) unless RailsAdminSettings::Setting.ns(ns).where(key: "default_title").exists?
           if Settings.file_uploads_supported

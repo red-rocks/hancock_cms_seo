@@ -32,6 +32,7 @@ module Hancock::Seo::EventsHelper
     code  = []
     reset_events_function_name = Hancock::Seo.config.reset_events_function_name
     code << "#{reset_events_function_name} || (#{reset_events_function_name} = function(){"
+    code << Hancock::Seo::Event.init_functions_pool
     code << render_seo_events_functions
     # Hancock::Seo::Event.enabled.sorted.to_a.each do |e|
     #   function_name = "window.#{e.function_name}"
