@@ -25,7 +25,8 @@ module Hancock::Seo
 
       included do
         def ym_counter_object
-          "window.yaCounter#{Hancock::Seo::Seo.settings.ym_counter_id}" unless Hancock::Seo::Seo.settings.ym_counter_id.blank?
+          # "window.yaCounter#{Hancock::Seo::Seo.settings.ym_counter_id}" unless Hancock::Seo::Seo.settings.ym_counter_id.blank?
+          "window.ym" unless Hancock::Seo::Seo.settings.ym_counter_id.blank?
         end
         add_insertion :ym_counter_object
 

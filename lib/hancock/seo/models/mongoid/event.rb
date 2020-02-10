@@ -54,7 +54,8 @@ module Hancock::Seo
           end
           def ym_goal_js_code
             unless ym_counter_object.blank?
-              @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}".strip
+              # @ym_goal_js_code ||= "#{ym_counter_object}.reachGoal('#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}".strip
+              @ym_goal_js_code ||= "#{ym_counter_object}(#{Hancock::Seo::Seo.settings.ym_counter_id}, 'reachGoal', '#{ym_goal_data_formatted['target']}', #{(ym_goal_data_formatted['params'] || {}).to_json});#{ym_goal_debug_js_code}".strip
             end
           end
           def ym_goal_debug_js_code
